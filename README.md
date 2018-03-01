@@ -28,4 +28,6 @@ Juno24e - Extract control points from cruise phase star fields to drive *Huginâ€
 
 Juno25 - Convert MissionJuno website `-raw.png` files to full CCD frame images which can be processed as a panorama in *Hugin*
 
+Juno28g - JunoCam raw data processing pipeline
+
 extendedImageTransformation - development and testing of extension to Mathematica's `ImageTransformation[]`
