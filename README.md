@@ -30,6 +30,8 @@ Juno24Matchpoints.csv - Control points extracted by Juno24u.
 
 Juno28g - JunoCam raw data processing pipeline
 
+Juno3D - JunoCam to Wavefront .OBJ 3D planet model (renderable in Blender, SceneKit)
+
 extendedImageTransformation - development and testing of extension to Mathematica's `ImageTransformation[]`
 
 ## Obsolete
