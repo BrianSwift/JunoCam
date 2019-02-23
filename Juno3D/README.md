@@ -14,6 +14,8 @@ P00_102bt3.png - Blue texture image
 P00_102gt2.png - Green texture image
 
 P00_102rt1.png - Red texture image
+
+P18_31.obj.py - Example Blender Python rendering setup for image P18_31 (unrelated to P00_102 samples)
 ## Renderer Samples
 JunocamLibrary.blend - _Blender_ configuration template
 
