@@ -15,7 +15,9 @@ P00_102gt2.png - Green texture image
 
 P00_102rt1.png - Red texture image
 
-P18_31.obj.py - Example Blender Python rendering setup for image P18_31 (unrelated to P00_102 samples)
+P00_102.obj.py - Blender Python rendering setup commands
+
+Blender command example  `/Applications/Blender/blender.app/Contents/MacOS/blender --factory-startup JunocamLibrary.blend --python P00_102.obj.py`
 ## Renderer Samples
 JunocamLibrary.blend - _Blender_ configuration template
 
