@@ -1,0 +1,9 @@
+# MTL File for P00_102B.obj
+# linkageUUID bsobj-874a77c4-81bf-4d8c-93e5-b48b187f382c
+newmtl P00_102Bbt1
+kd 1. 1. 1.
+ka 0.0 0.0 0.0
+ks 0. 0. 0.
+illum 2
+map_Kd P00_102Bbt1.png
+# EOF

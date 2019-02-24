@@ -18,6 +18,8 @@ P00_102rt1.png - Red texture image
 P00_102.obj.py - Blender Python rendering setup commands
 
 Blender command example  `/Applications/Blender/blender.app/Contents/MacOS/blender --factory-startup JunocamLibrary.blend --python P00_102.obj.py`
+
+singleChannelOBJs - Directory with Red/Green/Blue layers in separate OBJ files (not a default output, but possibly usefull for renderer bootstraping)
 ## Renderer Samples
 JunocamLibrary.blend - _Blender_ configuration template
 
