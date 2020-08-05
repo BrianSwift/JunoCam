@@ -1,0 +1,2144 @@
+(* Content-type: application/vnd.wolfram.mathematica *)
+
+(*** Wolfram Notebook File ***)
+(* http://www.wolfram.com/nb *)
+
+(* CreatedBy='Mathematica 11.3' *)
+
+(*CacheID: 234*)
+(* Internal cache information:
+NotebookFileLineBreakTest
+NotebookFileLineBreakTest
+NotebookDataPosition[       158,          7]
+NotebookDataLength[     86223,       2136]
+NotebookOptionsPosition[     77045,       2023]
+NotebookOutlinePosition[     77381,       2038]
+CellTagsIndexPosition[     77338,       2035]
+WindowFrame->Normal*)
+
+(* Beginning of Notebook Content *)
+Notebook[{
+
+Cell[CellGroupData[{
+Cell["Bulk Download From Mission Juno", "Title",
+ CellChangeTimes->{{3.759298960018718*^9, 
+  3.7592989658475227`*^9}},ExpressionUUID->"7621cb8b-61c2-402f-96a5-\
+30881c8940c1"],
+
+Cell[BoxData[
+ RowBox[{"(*", " ", 
+  RowBox[{
+  "Reworked", " ", "download", " ", "to", " ", "not", " ", "use", " ", 
+   "ExternalEvaluate", " ", "to", " ", "\"\<WebDriver-Chrome\>\"", " ", "to", 
+   " ", "work", " ", "under", " ", "MM", " ", "12"}], " ", "*)"}]], "Input",
+ CellChangeTimes->{{3.80497803504552*^9, 3.804978073929715*^9}, {
+  3.804978146784872*^9, 
+  3.804978175757785*^9}},ExpressionUUID->"033cb596-45df-4649-846d-\
+4bf666621553"],
+
+Cell[BoxData[
+ RowBox[{
+  RowBox[{"(*", " ", 
+   RowBox[{
+    RowBox[{
+     RowBox[{
+      RowBox[{"URLDownload", "[", "]"}], " ", "does", " ", "not", " ", 
+      "honor", " ", "content"}], "-", 
+     RowBox[{"disposition", " ", "\"\<attachment; filename\>\""}]}], ",", " ", 
+    RowBox[{
+    "so", " ", "make", " ", "something", " ", "that", " ", "works"}]}], " ", 
+   "*)"}], "\[IndentingNewLine]", 
+  RowBox[{"(*", " ", 
+   RowBox[{
+   "could", " ", "add", " ", "validation", " ", "of", " ", "inputs", " ", 
+    "XXX"}], " ", "*)"}], "\[IndentingNewLine]", 
+  RowBox[{"(*", " ", 
+   RowBox[{"Developed", " ", "in", " ", 
+    RowBox[{"NewDownloadDev", ".", "nb"}]}], " ", "*)"}], 
+  "\[IndentingNewLine]", 
+  RowBox[{
+   RowBox[{"urlDownloadToAttachmentFilename", "[", 
+    RowBox[{"url_", ",", "directory_"}], "]"}], ":=", 
+   RowBox[{"Block", "[", "\[IndentingNewLine]", 
+    RowBox[{
+     RowBox[{"{", 
+      RowBox[{
+      "downloadResults", "\[IndentingNewLine]", ",", "contentDisposition", 
+       "\[IndentingNewLine]", ",", "attachmentFilename", 
+       "\[IndentingNewLine]", ",", "desiredFilename"}], "\[IndentingNewLine]",
+       "}"}], ",", "\[IndentingNewLine]", 
+     RowBox[{
+      RowBox[{"downloadResults", "=", 
+       RowBox[{"URLDownload", "[", 
+        RowBox[{"url", ",", "directory", ",", "All"}], "]"}]}], ";", " ", 
+      RowBox[{"(*", " ", 
+       RowBox[{
+       "returns", " ", "Associoation", " ", "with", " ", "keys", " ", 
+        RowBox[{"{", 
+         RowBox[{
+         "\"\<StatusCode\>\"", ",", "\"\<Headers\>\"", ",", "\"\<File\>\"", 
+          ",", "\"\<Cookies\>\"", ",", "\"\<HTTPRequest\>\""}], "}"}]}], " ", 
+       "*)"}], "\[IndentingNewLine]", 
+      RowBox[{"contentDisposition", "=", 
+       RowBox[{"\"\<content-disposition\>\"", "/.", 
+        RowBox[{
+        "downloadResults", "\[LeftDoubleBracket]", "\"\<Headers\>\"", 
+         "\[RightDoubleBracket]"}]}]}], ";", "\[IndentingNewLine]", 
+      RowBox[{"attachmentFilename", "=", 
+       RowBox[{"StringReplace", "[", 
+        RowBox[{"contentDisposition", ",", 
+         RowBox[{
+          RowBox[{
+          "\"\<attachment; filename=\\\"\>\"", "~~", "fileName__", "~~", 
+           "\"\<\\\"\>\""}], "\[RuleDelayed]", " ", "fileName"}]}], "]"}]}], 
+      ";", "\[IndentingNewLine]", 
+      RowBox[{"desiredFilename", "=", 
+       RowBox[{"FileNameJoin", "[", 
+        RowBox[{"{", 
+         RowBox[{
+          RowBox[{"DirectoryName", "[", 
+           RowBox[{
+           "downloadResults", "\[LeftDoubleBracket]", "\"\<File\>\"", 
+            "\[RightDoubleBracket]"}], "]"}], ",", 
+          RowBox[{"FileNameTake", "[", 
+           RowBox[{"attachmentFilename", ",", 
+            RowBox[{"-", "1"}]}], "]"}]}], "}"}], "]"}]}], ";", 
+      "\[IndentingNewLine]", 
+      RowBox[{"RenameFile", "[", 
+       RowBox[{
+        RowBox[{
+        "downloadResults", "\[LeftDoubleBracket]", "\"\<File\>\"", 
+         "\[RightDoubleBracket]"}], ",", "desiredFilename"}], "]"}]}]}], 
+    "\[IndentingNewLine]", "]"}]}]}]], "Input",
+ CellChangeTimes->{{3.8049758513185873`*^9, 3.804975975296288*^9}, {
+   3.804976148553418*^9, 3.80497644358254*^9}, 3.80497655996537*^9, 
+   3.8049767282205553`*^9, {3.80497826322959*^9, 3.8049782763149233`*^9}, {
+   3.8049784370378847`*^9, 3.804978448796699*^9}},
+ CellLabel->"In[1]:=",ExpressionUUID->"1081996a-f022-45df-8ebb-adc738e62204"],
+
+Cell[BoxData[
+ RowBox[{
+  RowBox[{"downloadById", "[", "id_String", "]"}], ":=", 
+  RowBox[{"Block", "[", 
+   RowBox[{
+    RowBox[{"{", "\[IndentingNewLine]", 
+     RowBox[{
+     "downloadsImageFilename", "\[IndentingNewLine]", ",", 
+      "downloadsDataFilename", "\[IndentingNewLine]", ",", 
+      "zipsImageFilename", "\[IndentingNewLine]", ",", "zipsDataFilename", 
+      "\[IndentingNewLine]", "\[IndentingNewLine]", ",", "xmlForId", 
+      "\[IndentingNewLine]", ",", "downloadZipElems", "\[IndentingNewLine]", 
+      ",", "downloadHrefs", "\[IndentingNewLine]", ",", 
+      RowBox[{"siteURL", "=", "\"\<https://www.missionjuno.swri.edu\>\""}], 
+      "\[IndentingNewLine]", ",", 
+      RowBox[{"downloadDirectory", "=", "\"\</Users/bswift/Downloads\>\""}], 
+      "\[IndentingNewLine]", ",", "downloadURLs"}], "\[IndentingNewLine]", 
+     "\[IndentingNewLine]", "}"}], ",", "\[IndentingNewLine]", 
+    RowBox[{
+     RowBox[{"downloadsImageFilename", "=", 
+      RowBox[{
+      "\"\</Users/bswift/Downloads/\>\"", "<>", "id", "<>", 
+       "\"\<-ImageSet.zip\>\""}]}], ";", "\[IndentingNewLine]", 
+     RowBox[{"downloadsDataFilename", "=", 
+      RowBox[{
+      "\"\</Users/bswift/Downloads/\>\"", "<>", "id", "<>", 
+       "\"\<-Data.zip\>\""}]}], ";", "\[IndentingNewLine]", 
+     RowBox[{"zipsImageFilename", "=", 
+      RowBox[{
+      "\"\</Users/bswift/Downloads/junozips/\>\"", "<>", "id", "<>", 
+       "\"\<-ImageSet.zip\>\""}]}], ";", "\[IndentingNewLine]", 
+     RowBox[{"zipsDataFilename", "=", 
+      RowBox[{
+      "\"\</Users/bswift/Downloads/junozips/\>\"", "<>", "id", "<>", 
+       "\"\<-Data.zip\>\""}]}], ";", "\[IndentingNewLine]", 
+     RowBox[{"(*", " ", 
+      RowBox[{
+       RowBox[{
+       "If", " ", "both", " ", "files", " ", "are", " ", "not", " ", 
+        "present", " ", "in", " ", "either", " ", "of", " ", "downloads", " ",
+         "or", " ", "junozips"}], ",", " ", 
+       RowBox[{
+       "will", " ", "attempt", " ", "to", " ", "download", " ", "both", " ", 
+        RowBox[{"files", ".", "\[IndentingNewLine]", "Since"}], " ", 
+        RowBox[{"arrival", "/", "departure"}], " ", "movies", " ", 
+        RowBox[{"don", "'"}], "t", " ", "follow", " ", "above", " ", 
+        "filename", " ", "convention"}], ",", " ", 
+       RowBox[{
+       "will", " ", "always", " ", "be", " ", "downloaded", " ", "even", " ", 
+        "if", " ", "already", " ", 
+        RowBox[{"there", "."}]}]}], " ", "*)"}], "\[IndentingNewLine]", 
+     RowBox[{"If", "[", 
+      RowBox[{
+       RowBox[{"!", 
+        RowBox[{"(", "\[IndentingNewLine]", 
+         RowBox[{
+          RowBox[{"(", 
+           RowBox[{
+            RowBox[{"FileExistsQ", "[", "downloadsImageFilename", "]"}], "&&", 
+            RowBox[{"FileExistsQ", "[", "downloadsDataFilename", "]"}]}], 
+           ")"}], "\[IndentingNewLine]", "||", "\[IndentingNewLine]", 
+          RowBox[{"(", 
+           RowBox[{
+            RowBox[{"FileExistsQ", "[", "zipsImageFilename", "]"}], "&&", 
+            RowBox[{"FileExistsQ", "[", "zipsDataFilename", "]"}]}], ")"}]}], 
+         "\[IndentingNewLine]", ")"}]}], "\[IndentingNewLine]", ",", 
+       "\[IndentingNewLine]", 
+       RowBox[{"(*", " ", 
+        RowBox[{"build", " ", "downloadURLs"}], " ", "*)"}], 
+       "\[IndentingNewLine]", 
+       RowBox[{
+        RowBox[{"xmlForId", "=", 
+         RowBox[{"Import", "[", 
+          RowBox[{
+           RowBox[{
+           "\"\<https://www.missionjuno.swri.edu/junocam/processing?id=\>\"", 
+            "<>", "id"}], ",", "\"\<XMLObject\>\""}], "]"}]}], ";", 
+        "\[IndentingNewLine]", 
+        RowBox[{"downloadZipElems", "=", 
+         RowBox[{"Cases", "[", 
+          RowBox[{"xmlForId", ",", 
+           RowBox[{"{", 
+            RowBox[{"__", ",", 
+             RowBox[{
+             "\"\<class\>\"", "\[Rule]", "\"\<marR download_zip\>\""}], ",", 
+             "__"}], "}"}], ",", "Infinity"}], "]"}]}], ";", 
+        "\[IndentingNewLine]", 
+        RowBox[{"downloadHrefs", "=", 
+         RowBox[{"Union", "@", 
+          RowBox[{"Cases", "[", 
+           RowBox[{"downloadZipElems", ",", 
+            RowBox[{
+             RowBox[{"(", 
+              RowBox[{"\"\<href\>\"", "\[Rule]", "x_"}], ")"}], "\[Rule]", 
+             "  ", "x"}], ",", "Infinity"}], "]"}]}]}], ";", 
+        "\[IndentingNewLine]", 
+        RowBox[{"Assert", "[", 
+         RowBox[{
+          RowBox[{"Length", "[", "downloadHrefs", "]"}], "\[Equal]", "2"}], 
+         "]"}], ";", "\[IndentingNewLine]", 
+        RowBox[{"downloadURLs", "=", 
+         RowBox[{"Map", "[", 
+          RowBox[{
+           RowBox[{
+            RowBox[{"siteURL", "<>", "#"}], "&"}], ",", "downloadHrefs"}], 
+          "]"}]}], ";", "\[IndentingNewLine]", "\[IndentingNewLine]", 
+        RowBox[{"Map", "[", 
+         RowBox[{
+          RowBox[{
+           RowBox[{"(", 
+            RowBox[{
+             RowBox[{"Pause", "[", "1", "]"}], ";", 
+             RowBox[{"urlDownloadToAttachmentFilename", "[", 
+              RowBox[{"#", ",", "downloadDirectory"}], "]"}]}], ")"}], 
+           "\[IndentingNewLine]", "&"}], ",", "downloadURLs"}], "]"}], ";", 
+        "\[IndentingNewLine]", 
+        RowBox[{"Print", "[", 
+         RowBox[{
+         "\"\<Downloaded \>\"", ",", "id", ",", "\"\< \>\"", ",", "Now"}], 
+         "]"}], ";", "\[IndentingNewLine]", "True"}], "\[IndentingNewLine]", 
+       ",", 
+       RowBox[{
+        RowBox[{"Print", "[", 
+         RowBox[{"\"\<Skipped \>\"", ",", "id"}], "]"}], ";", 
+        "\[IndentingNewLine]", "False"}]}], "\[IndentingNewLine]", "]"}]}]}], 
+   "\[IndentingNewLine]", "]"}]}]], "Input",
+ CellChangeTimes->{{3.759297975159885*^9, 3.759298110825094*^9}, {
+   3.759298169602943*^9, 3.759298204156315*^9}, {3.759298243975031*^9, 
+   3.759298248027377*^9}, {3.759298289061356*^9, 3.759298291346098*^9}, {
+   3.759298793386932*^9, 3.759298844597623*^9}, {3.759299143402907*^9, 
+   3.7592991798819723`*^9}, {3.759299428236438*^9, 3.759299452241287*^9}, {
+   3.759299513614887*^9, 3.7592995704354353`*^9}, {3.7593510580411463`*^9, 
+   3.7593510587469*^9}, {3.759351111214809*^9, 3.75935111129405*^9}, {
+   3.75935119685952*^9, 3.759351249857185*^9}, {3.7593513026160603`*^9, 
+   3.759351434227024*^9}, {3.759351499868936*^9, 3.759351510712899*^9}, {
+   3.7593515474060917`*^9, 3.759351635937725*^9}, {3.7593518608825207`*^9, 
+   3.759351868490724*^9}, 3.7593610932773733`*^9, {3.7593611647966633`*^9, 
+   3.759361236401166*^9}, {3.7593617001867523`*^9, 3.759361721877515*^9}, 
+   3.7593619326790943`*^9, {3.759362683153533*^9, 3.759362712217711*^9}, {
+   3.75936290972112*^9, 3.759362952639987*^9}, {3.7593629922930117`*^9, 
+   3.7593629955858088`*^9}, {3.763858312484632*^9, 3.7638583919442244`*^9}, {
+   3.763858425545698*^9, 3.7638584265964403`*^9}, {3.7638584648941097`*^9, 
+   3.763858527547721*^9}, {3.763858560416872*^9, 3.763858574676156*^9}, {
+   3.804977578317443*^9, 3.804977581350033*^9}, {3.804977612868638*^9, 
+   3.804977615204673*^9}, {3.804977652107518*^9, 3.804977654187318*^9}, {
+   3.804977686643417*^9, 3.804977707713396*^9}, {3.80497773889625*^9, 
+   3.8049777407840776`*^9}, {3.8049777902528067`*^9, 3.80497783034846*^9}, {
+   3.804977867660849*^9, 3.804977986598813*^9}, {3.804978219245294*^9, 
+   3.8049782485084257`*^9}, {3.804978299924855*^9, 3.80497834901157*^9}, {
+   3.8049785164922*^9, 3.804978547938827*^9}, {3.804978637702948*^9, 
+   3.804978642477715*^9}},
+ CellLabel->"In[3]:=",ExpressionUUID->"69d5e7e7-331c-446f-ac4d-7f7211d746b3"],
+
+Cell[BoxData[
+ RowBox[{
+  RowBox[{"downloadPJ", "[", "pj_String", "]"}], ":=", 
+  RowBox[{"Block", "[", 
+   RowBox[{
+    RowBox[{"{", "\[IndentingNewLine]", 
+     RowBox[{
+     "hyperLinks", "\[IndentingNewLine]", ",", "idStrings", 
+      "\[IndentingNewLine]", 
+      RowBox[{"(*", 
+       RowBox[{",", "session"}], "*)"}], 
+      RowBox[{"(*", " ", 
+       RowBox[{
+       "leave", " ", "session", " ", "global", " ", "in", " ", "case", " ", 
+        "script", " ", "aborted"}], " ", "*)"}], "\[IndentingNewLine]", ",", 
+      "downloadedFlags"}], "\[IndentingNewLine]", "}"}], ",", 
+    "\[IndentingNewLine]", "\[IndentingNewLine]", 
+    RowBox[{
+     RowBox[{"hyperLinks", "=", 
+      RowBox[{"Import", "[", 
+       RowBox[{
+        RowBox[{
+        "\"\<https://www.missionjuno.swri.edu/junocam/processing?source=\
+junocam&ob_from=&ob_to=&phases%5B%5D=PERIJOVE+\>\"", "<>", "pj", "<>", 
+         "\"\<&perpage=100\>\""}], ",", "\"\<Hyperlinks\>\""}], "]"}]}], " ", 
+     ";", " ", 
+     RowBox[{"(*", " ", 
+      RowBox[{
+       RowBox[{
+        RowBox[{"Won", "'"}], "t", " ", "get", " ", "everything", " ", "if", 
+        " ", "more", " ", "than", " ", "100", " ", "images", " ", "in", " ", 
+        "phase"}], ",", " ", 
+       RowBox[{
+       "need", " ", "to", " ", "also", " ", "extract", " ", "IDs", " ", 
+        "from", " ", "additional", " ", "pages", " ", "by", " ", "following", 
+        " ", "links", " ", "like", " ", 
+        "\"\<https://www.missionjuno.swri.edu/junocam/processing?phases%5B%5D=\
+PERIJOVE+15&phases%5B%5D=PERIJOVE+16&phases%5B%5D=PERIJOVE+17&phases%5B%5D=\
+PERIJOVE+18&source=junocam&perpage=100&p=2\>\"", "\[IndentingNewLine]", 
+        "Above", " ", "link", " ", "identified", " ", "using", " ", "web", 
+        " ", "page", " ", "inspector", " ", "and", " ", "looking", " ", "at", 
+        " ", "first", " ", "entry", " ", "on", " ", "Network", " ", 
+        "transactions", " ", "after", " ", "doing", " ", "an", " ", "Apply", 
+        " ", 
+        RowBox[{"Filters", "."}]}]}], " ", "\[IndentingNewLine]", "*)"}], 
+     "\[IndentingNewLine]", 
+     RowBox[{"idStrings", "=", 
+      RowBox[{"Union", "@", 
+       RowBox[{"Map", "[", 
+        RowBox[{
+         RowBox[{
+          RowBox[{"StringReplace", "[", 
+           RowBox[{"#", ",", 
+            RowBox[{
+             RowBox[{"__", "~~", "\"\<id=\>\"", "~~", 
+              RowBox[{"idNum", ":", "__"}]}], "\[RuleDelayed]", " ", 
+             "idNum"}]}], "]"}], "&"}], ",", 
+         RowBox[{"Select", "[", 
+          RowBox[{"hyperLinks", ",", 
+           RowBox[{
+            RowBox[{"StringMatchQ", "[", 
+             RowBox[{"#", ",", 
+              RowBox[{"__", "~~", "\"\<id=\>\"", "~~", "__"}]}], "]"}], 
+            "&"}]}], "]"}]}], "]"}]}]}], ";", "\[IndentingNewLine]", 
+     RowBox[{"(*", " ", 
+      RowBox[{
+      "Extract", " ", "IDs", " ", "as", " ", "strings", " ", "from", " ", 
+       "links", " ", "that", " ", "look", " ", "like", " ", "this", 
+       "\[IndentingNewLine]", 
+       "\"\<https://www.missionjuno.swri.edu/junocam/processing?id=5944\>\""}]\
+, "\[IndentingNewLine]", "*)"}], "\[IndentingNewLine]", 
+     RowBox[{"Print", "[", 
+      RowBox[{"\"\<Downloading \>\"", ",", 
+       RowBox[{"Length", "[", "idStrings", "]"}], ",", "\"\< \>\"", ",", 
+       "idStrings"}], "]"}], ";", "\[IndentingNewLine]", 
+     RowBox[{"downloadedFlags", "=", 
+      RowBox[{"Map", "[", 
+       RowBox[{"downloadById", ",", "idStrings"}], "]"}]}], ";", " ", 
+     RowBox[{"(*", " ", 
+      RowBox[{
+      "Pause", " ", "to", " ", "allow", " ", "time", " ", "do", " ", 
+       "download", " ", "to", " ", "run", " ", "and", " ", "to", " ", "not", 
+       " ", "put", " ", "too", " ", "heavy", " ", "of", " ", "a", " ", "load",
+        " ", "on", " ", 
+       RowBox[{"service", "."}]}], " ", "*)"}], "\[IndentingNewLine]", 
+     "\[IndentingNewLine]", "downloadedFlags"}]}], "\[IndentingNewLine]", 
+   "]"}]}]], "Input",
+ CellChangeTimes->{{3.759359712070855*^9, 3.759359906434731*^9}, {
+   3.75936041319287*^9, 3.7593604889855022`*^9}, {3.759360591223483*^9, 
+   3.75936091304132*^9}, {3.759360951310286*^9, 3.75936098270922*^9}, {
+   3.759361046370842*^9, 3.759361070790773*^9}, {3.7593638655355167`*^9, 
+   3.759363866683937*^9}, {3.759364157548913*^9, 3.759364201666687*^9}, {
+   3.7593642345280647`*^9, 3.759364261900896*^9}, {3.7593696147574873`*^9, 
+   3.759369617054646*^9}, {3.7593702388695498`*^9, 3.75937026478265*^9}, {
+   3.759370413191854*^9, 3.759370447761734*^9}, 3.804977492186866*^9, 
+   3.8049775335913*^9, {3.804981524367581*^9, 
+   3.804981532451283*^9}},ExpressionUUID->"2dcb1fd1-c716-45df-a3ec-\
+f89da367e491"],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+ RowBox[{
+  RowBox[{"AbsoluteTiming", "[", 
+   RowBox[{"downloadPJ", "[", "\"\<28\>\"", "]"}], "]"}], " ", 
+  RowBox[{"(*", " ", 
+   RowBox[{
+   "run", " ", "twice", " ", "to", " ", "verify", " ", "have", " ", 
+    "everything"}], " ", "*)"}]}]], "Input",
+ CellChangeTimes->{{3.7593612680902977`*^9, 3.759361287103923*^9}, {
+   3.759364277483552*^9, 3.7593642775840816`*^9}, {3.759364782977215*^9, 
+   3.75936478307977*^9}, {3.7593648169198723`*^9, 3.759364826773995*^9}, {
+   3.759366018127596*^9, 3.759366035903479*^9}, {3.759366076815943*^9, 
+   3.759366077161227*^9}, {3.7593694530245667`*^9, 3.759369453081489*^9}, {
+   3.761251063934971*^9, 3.7612510640111313`*^9}, {3.7612518293373003`*^9, 
+   3.761251829473329*^9}, {3.7612525090771437`*^9, 3.761252509230668*^9}, {
+   3.76125309360111*^9, 3.761253097557686*^9}, 3.761253643041424*^9, {
+   3.7612540357377253`*^9, 3.761254036378194*^9}, {3.7612543926641617`*^9, 
+   3.761254393322255*^9}, {3.7612551503070793`*^9, 3.7612551504070997`*^9}, {
+   3.761255626102759*^9, 3.761255627022119*^9}, {3.7612558789881363`*^9, 
+   3.761255879086668*^9}, {3.761256428504113*^9, 3.761256428570491*^9}, {
+   3.761258124104619*^9, 3.761258124187986*^9}, 3.763763891843875*^9, {
+   3.7682331335076113`*^9, 3.7682331335859623`*^9}, {3.7686119228594093`*^9, 
+   3.768611922935907*^9}, {3.772898848668942*^9, 3.7728988487467203`*^9}, {
+   3.7776776927632437`*^9, 3.7776776928798323`*^9}, {3.7819821482198887`*^9, 
+   3.781982148259078*^9}, {3.787103586191958*^9, 3.787103586264627*^9}, {
+   3.7910513217149267`*^9, 3.791051321811006*^9}, {3.796242943679847*^9, 
+   3.796242943770879*^9}, {3.800300879712221*^9, 3.8003008802431602`*^9}, {
+   3.804898145745058*^9, 3.804898146287725*^9}},
+ CellLabel->"In[6]:=",ExpressionUUID->"59801bf4-7a5d-4328-8a8d-84b091364a34"],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+ InterpretationBox[
+  RowBox[{"\<\"Downloading \"\>", "\[InvisibleSpace]", "64", 
+   "\[InvisibleSpace]", "\<\" \"\>", "\[InvisibleSpace]", 
+   RowBox[{"{", 
+    RowBox[{"\<\"8924\"\>", ",", "\<\"8925\"\>", ",", "\<\"8926\"\>", 
+     ",", "\<\"8927\"\>", ",", "\<\"8928\"\>", ",", "\<\"8929\"\>", 
+     ",", "\<\"8930\"\>", ",", "\<\"8931\"\>", ",", "\<\"8932\"\>", 
+     ",", "\<\"8933\"\>", ",", "\<\"8934\"\>", ",", "\<\"8935\"\>", 
+     ",", "\<\"8936\"\>", ",", "\<\"8937\"\>", ",", "\<\"8938\"\>", 
+     ",", "\<\"8939\"\>", ",", "\<\"8940\"\>", ",", "\<\"8941\"\>", 
+     ",", "\<\"8942\"\>", ",", "\<\"8943\"\>", ",", "\<\"8944\"\>", 
+     ",", "\<\"8945\"\>", ",", "\<\"8946\"\>", ",", "\<\"8947\"\>", 
+     ",", "\<\"8948\"\>", ",", "\<\"8949\"\>", ",", "\<\"8950\"\>", 
+     ",", "\<\"8951\"\>", ",", "\<\"8952\"\>", ",", "\<\"8953\"\>", 
+     ",", "\<\"8954\"\>", ",", "\<\"8955\"\>", ",", "\<\"8956\"\>", 
+     ",", "\<\"8957\"\>", ",", "\<\"8958\"\>", ",", "\<\"8959\"\>", 
+     ",", "\<\"8960\"\>", ",", "\<\"8961\"\>", ",", "\<\"8962\"\>", 
+     ",", "\<\"8963\"\>", ",", "\<\"8964\"\>", ",", "\<\"8965\"\>", 
+     ",", "\<\"8966\"\>", ",", "\<\"8967\"\>", ",", "\<\"8968\"\>", 
+     ",", "\<\"8969\"\>", ",", "\<\"8970\"\>", ",", "\<\"8971\"\>", 
+     ",", "\<\"8972\"\>", ",", "\<\"8973\"\>", ",", "\<\"8974\"\>", 
+     ",", "\<\"8975\"\>", ",", "\<\"8976\"\>", ",", "\<\"8977\"\>", 
+     ",", "\<\"8978\"\>", ",", "\<\"8979\"\>", ",", "\<\"8980\"\>", 
+     ",", "\<\"8981\"\>", ",", "\<\"8982\"\>", ",", "\<\"8983\"\>", 
+     ",", "\<\"8984\"\>", ",", "\<\"8987\"\>", ",", "\<\"8988\"\>", 
+     ",", "\<\"8995\"\>"}], "}"}]}],
+  SequenceForm[
+  "Downloading ", 64, " ", {
+   "8924", "8925", "8926", "8927", "8928", "8929", "8930", "8931", "8932", 
+    "8933", "8934", "8935", "8936", "8937", "8938", "8939", "8940", "8941", 
+    "8942", "8943", "8944", "8945", "8946", "8947", "8948", "8949", "8950", 
+    "8951", "8952", "8953", "8954", "8955", "8956", "8957", "8958", "8959", 
+    "8960", "8961", "8962", "8963", "8964", "8965", "8966", "8967", "8968", 
+    "8969", "8970", "8971", "8972", "8973", "8974", "8975", "8976", "8977", 
+    "8978", "8979", "8980", "8981", "8982", "8983", "8984", "8987", "8988", 
+    "8995"}],
+  Editable->False]], "Print",
+ CellChangeTimes->{3.804978696547968*^9, 3.8049815468661423`*^9},
+ CellLabel->
+  "During evaluation of \
+In[6]:=",ExpressionUUID->"d4addbf3-b46a-4972-8051-804146f461e9"],
+
+Cell[BoxData[
+ InterpretationBox[
+  RowBox[{"\<\"Skipped \"\>", "\[InvisibleSpace]", "\<\"8924\"\>"}],
+  SequenceForm["Skipped ", "8924"],
+  Editable->False]], "Print",
+ CellChangeTimes->{3.804978696547968*^9, 3.804981546869576*^9},
+ CellLabel->
+  "During evaluation of \
+In[6]:=",ExpressionUUID->"eb218952-85de-4aba-99e9-f576048299b1"],
+
+Cell[BoxData[
+ InterpretationBox[
+  RowBox[{"\<\"Skipped \"\>", "\[InvisibleSpace]", "\<\"8925\"\>"}],
+  SequenceForm["Skipped ", "8925"],
+  Editable->False]], "Print",
+ CellChangeTimes->{3.804978696547968*^9, 3.804981546871237*^9},
+ CellLabel->
+  "During evaluation of \
+In[6]:=",ExpressionUUID->"dab25d13-2800-4567-a65f-3877b3cde3c4"],
+
+Cell[BoxData[
+ InterpretationBox[
+  RowBox[{"\<\"Skipped \"\>", "\[InvisibleSpace]", "\<\"8926\"\>"}],
+  SequenceForm["Skipped ", "8926"],
+  Editable->False]], "Print",
+ CellChangeTimes->{3.804978696547968*^9, 3.804981546872278*^9},
+ CellLabel->
+  "During evaluation of \
+In[6]:=",ExpressionUUID->"cb2d681f-58ee-45b8-bc50-027804293e82"],
+
+Cell[BoxData[
+ InterpretationBox[
+  RowBox[{"\<\"Skipped \"\>", "\[InvisibleSpace]", "\<\"8927\"\>"}],
+  SequenceForm["Skipped ", "8927"],
+  Editable->False]], "Print",
+ CellChangeTimes->{3.804978696547968*^9, 3.8049815468733253`*^9},
+ CellLabel->
+  "During evaluation of \
+In[6]:=",ExpressionUUID->"cc3c40a5-b1ef-4487-97bb-ffbf223ce1bc"],
+
+Cell[BoxData[
+ InterpretationBox[
+  RowBox[{"\<\"Skipped \"\>", "\[InvisibleSpace]", "\<\"8928\"\>"}],
+  SequenceForm["Skipped ", "8928"],
+  Editable->False]], "Print",
+ CellChangeTimes->{3.804978696547968*^9, 3.804981546874343*^9},
+ CellLabel->
+  "During evaluation of \
+In[6]:=",ExpressionUUID->"81acde6b-2368-4435-8276-2b2d68ff719a"],
+
+Cell[BoxData[
+ InterpretationBox[
+  RowBox[{"\<\"Skipped \"\>", "\[InvisibleSpace]", "\<\"8929\"\>"}],
+  SequenceForm["Skipped ", "8929"],
+  Editable->False]], "Print",
+ CellChangeTimes->{3.804978696547968*^9, 3.80498154687537*^9},
+ CellLabel->
+  "During evaluation of \
+In[6]:=",ExpressionUUID->"95e0103d-e631-43d9-86a5-3b5f9bcaf925"],
+
+Cell[BoxData[
+ InterpretationBox[
+  RowBox[{"\<\"Skipped \"\>", "\[InvisibleSpace]", "\<\"8930\"\>"}],
+  SequenceForm["Skipped ", "8930"],
+  Editable->False]], "Print",
+ CellChangeTimes->{3.804978696547968*^9, 3.804981546876391*^9},
+ CellLabel->
+  "During evaluation of \
+In[6]:=",ExpressionUUID->"a73afb89-93f5-41ac-8c37-00b9ec74adf4"],
+
+Cell[BoxData[
+ InterpretationBox[
+  RowBox[{"\<\"Skipped \"\>", "\[InvisibleSpace]", "\<\"8931\"\>"}],
+  SequenceForm["Skipped ", "8931"],
+  Editable->False]], "Print",
+ CellChangeTimes->{3.804978696547968*^9, 3.804981546877413*^9},
+ CellLabel->
+  "During evaluation of \
+In[6]:=",ExpressionUUID->"f8c7a6a7-cab8-4690-9a37-bee303e8449b"],
+
+Cell[BoxData[
+ InterpretationBox[
+  RowBox[{"\<\"Skipped \"\>", "\[InvisibleSpace]", "\<\"8932\"\>"}],
+  SequenceForm["Skipped ", "8932"],
+  Editable->False]], "Print",
+ CellChangeTimes->{3.804978696547968*^9, 3.804981546878434*^9},
+ CellLabel->
+  "During evaluation of \
+In[6]:=",ExpressionUUID->"e47b3048-b1eb-43d5-84ab-fe4e3cfbfa04"],
+
+Cell[BoxData[
+ InterpretationBox[
+  RowBox[{"\<\"Skipped \"\>", "\[InvisibleSpace]", "\<\"8933\"\>"}],
+  SequenceForm["Skipped ", "8933"],
+  Editable->False]], "Print",
+ CellChangeTimes->{3.804978696547968*^9, 3.804981546879458*^9},
+ CellLabel->
+  "During evaluation of \
+In[6]:=",ExpressionUUID->"a0063b16-2f4f-4372-bfb5-08628954805a"],
+
+Cell[BoxData[
+ InterpretationBox[
+  RowBox[{"\<\"Skipped \"\>", "\[InvisibleSpace]", "\<\"8934\"\>"}],
+  SequenceForm["Skipped ", "8934"],
+  Editable->False]], "Print",
+ CellChangeTimes->{3.804978696547968*^9, 3.804981546880481*^9},
+ CellLabel->
+  "During evaluation of \
+In[6]:=",ExpressionUUID->"e5cd1dee-4028-416f-b165-950526d368d0"],
+
+Cell[BoxData[
+ InterpretationBox[
+  RowBox[{"\<\"Skipped \"\>", "\[InvisibleSpace]", "\<\"8935\"\>"}],
+  SequenceForm["Skipped ", "8935"],
+  Editable->False]], "Print",
+ CellChangeTimes->{3.804978696547968*^9, 3.804981546881501*^9},
+ CellLabel->
+  "During evaluation of \
+In[6]:=",ExpressionUUID->"012d672a-07c7-4ce7-bf92-50efcb85b979"],
+
+Cell[BoxData[
+ InterpretationBox[
+  RowBox[{"\<\"Skipped \"\>", "\[InvisibleSpace]", "\<\"8936\"\>"}],
+  SequenceForm["Skipped ", "8936"],
+  Editable->False]], "Print",
+ CellChangeTimes->{3.804978696547968*^9, 3.804981546882516*^9},
+ CellLabel->
+  "During evaluation of \
+In[6]:=",ExpressionUUID->"fc79a586-69be-4d7c-8406-47850833a883"],
+
+Cell[BoxData[
+ InterpretationBox[
+  RowBox[{"\<\"Skipped \"\>", "\[InvisibleSpace]", "\<\"8937\"\>"}],
+  SequenceForm["Skipped ", "8937"],
+  Editable->False]], "Print",
+ CellChangeTimes->{3.804978696547968*^9, 3.804981546883531*^9},
+ CellLabel->
+  "During evaluation of \
+In[6]:=",ExpressionUUID->"06160b13-27c8-4946-b7b7-d19d77084465"],
+
+Cell[BoxData[
+ InterpretationBox[
+  RowBox[{"\<\"Skipped \"\>", "\[InvisibleSpace]", "\<\"8938\"\>"}],
+  SequenceForm["Skipped ", "8938"],
+  Editable->False]], "Print",
+ CellChangeTimes->{3.804978696547968*^9, 3.804981546884548*^9},
+ CellLabel->
+  "During evaluation of \
+In[6]:=",ExpressionUUID->"7bdc727d-f3a1-48ef-84cb-3c1d22b8ced2"],
+
+Cell[BoxData[
+ InterpretationBox[
+  RowBox[{"\<\"Skipped \"\>", "\[InvisibleSpace]", "\<\"8939\"\>"}],
+  SequenceForm["Skipped ", "8939"],
+  Editable->False]], "Print",
+ CellChangeTimes->{3.804978696547968*^9, 3.804981546885563*^9},
+ CellLabel->
+  "During evaluation of \
+In[6]:=",ExpressionUUID->"4aa83eb6-0ce4-484b-946f-e9be9af3be1f"],
+
+Cell[BoxData[
+ InterpretationBox[
+  RowBox[{"\<\"Skipped \"\>", "\[InvisibleSpace]", "\<\"8940\"\>"}],
+  SequenceForm["Skipped ", "8940"],
+  Editable->False]], "Print",
+ CellChangeTimes->{3.804978696547968*^9, 3.80498154688657*^9},
+ CellLabel->
+  "During evaluation of \
+In[6]:=",ExpressionUUID->"033cfc27-adc6-4e62-8d73-7cafc80ddc6a"],
+
+Cell[BoxData[
+ InterpretationBox[
+  RowBox[{"\<\"Skipped \"\>", "\[InvisibleSpace]", "\<\"8941\"\>"}],
+  SequenceForm["Skipped ", "8941"],
+  Editable->False]], "Print",
+ CellChangeTimes->{3.804978696547968*^9, 3.804981546887582*^9},
+ CellLabel->
+  "During evaluation of \
+In[6]:=",ExpressionUUID->"939f6190-f762-46df-a5d5-8cd5a705e61b"],
+
+Cell[BoxData[
+ InterpretationBox[
+  RowBox[{"\<\"Skipped \"\>", "\[InvisibleSpace]", "\<\"8942\"\>"}],
+  SequenceForm["Skipped ", "8942"],
+  Editable->False]], "Print",
+ CellChangeTimes->{3.804978696547968*^9, 3.804981546888589*^9},
+ CellLabel->
+  "During evaluation of \
+In[6]:=",ExpressionUUID->"90681a40-bb8f-4941-bc3f-f7f31efa222f"],
+
+Cell[BoxData[
+ InterpretationBox[
+  RowBox[{"\<\"Skipped \"\>", "\[InvisibleSpace]", "\<\"8943\"\>"}],
+  SequenceForm["Skipped ", "8943"],
+  Editable->False]], "Print",
+ CellChangeTimes->{3.804978696547968*^9, 3.804981546889604*^9},
+ CellLabel->
+  "During evaluation of \
+In[6]:=",ExpressionUUID->"17502970-5684-4bac-a341-c16ab50a75f5"],
+
+Cell[BoxData[
+ InterpretationBox[
+  RowBox[{"\<\"Skipped \"\>", "\[InvisibleSpace]", "\<\"8944\"\>"}],
+  SequenceForm["Skipped ", "8944"],
+  Editable->False]], "Print",
+ CellChangeTimes->{3.804978696547968*^9, 3.8049815468906097`*^9},
+ CellLabel->
+  "During evaluation of \
+In[6]:=",ExpressionUUID->"f2a5a2e9-ce5c-4f7d-b2c2-b2ee6e6541ef"],
+
+Cell[BoxData[
+ InterpretationBox[
+  RowBox[{"\<\"Skipped \"\>", "\[InvisibleSpace]", "\<\"8945\"\>"}],
+  SequenceForm["Skipped ", "8945"],
+  Editable->False]], "Print",
+ CellChangeTimes->{3.804978696547968*^9, 3.804981546891623*^9},
+ CellLabel->
+  "During evaluation of \
+In[6]:=",ExpressionUUID->"4866acf6-6c73-4b17-a4fc-374f94905aac"],
+
+Cell[BoxData[
+ InterpretationBox[
+  RowBox[{"\<\"Skipped \"\>", "\[InvisibleSpace]", "\<\"8946\"\>"}],
+  SequenceForm["Skipped ", "8946"],
+  Editable->False]], "Print",
+ CellChangeTimes->{3.804978696547968*^9, 3.804981546892626*^9},
+ CellLabel->
+  "During evaluation of \
+In[6]:=",ExpressionUUID->"0a401b77-2cf6-4e46-92ce-688c1316f9c4"],
+
+Cell[BoxData[
+ InterpretationBox[
+  RowBox[{"\<\"Skipped \"\>", "\[InvisibleSpace]", "\<\"8947\"\>"}],
+  SequenceForm["Skipped ", "8947"],
+  Editable->False]], "Print",
+ CellChangeTimes->{3.804978696547968*^9, 3.8049815468936453`*^9},
+ CellLabel->
+  "During evaluation of \
+In[6]:=",ExpressionUUID->"72b384a0-eb96-49d7-9507-ae50afca90e0"],
+
+Cell[BoxData[
+ InterpretationBox[
+  RowBox[{"\<\"Skipped \"\>", "\[InvisibleSpace]", "\<\"8948\"\>"}],
+  SequenceForm["Skipped ", "8948"],
+  Editable->False]], "Print",
+ CellChangeTimes->{3.804978696547968*^9, 3.804981546894656*^9},
+ CellLabel->
+  "During evaluation of \
+In[6]:=",ExpressionUUID->"6bb678a5-cabf-4f9f-b49a-3552cca0faaf"],
+
+Cell[BoxData[
+ InterpretationBox[
+  RowBox[{"\<\"Skipped \"\>", "\[InvisibleSpace]", "\<\"8949\"\>"}],
+  SequenceForm["Skipped ", "8949"],
+  Editable->False]], "Print",
+ CellChangeTimes->{3.804978696547968*^9, 3.804981546895673*^9},
+ CellLabel->
+  "During evaluation of \
+In[6]:=",ExpressionUUID->"aa9f7bf7-7485-41cc-a667-f0d47515024a"],
+
+Cell[BoxData[
+ InterpretationBox[
+  RowBox[{"\<\"Skipped \"\>", "\[InvisibleSpace]", "\<\"8950\"\>"}],
+  SequenceForm["Skipped ", "8950"],
+  Editable->False]], "Print",
+ CellChangeTimes->{3.804978696547968*^9, 3.804981546896697*^9},
+ CellLabel->
+  "During evaluation of \
+In[6]:=",ExpressionUUID->"7401562b-1900-43ab-882a-7d509e39d158"],
+
+Cell[BoxData[
+ InterpretationBox[
+  RowBox[{"\<\"Skipped \"\>", "\[InvisibleSpace]", "\<\"8951\"\>"}],
+  SequenceForm["Skipped ", "8951"],
+  Editable->False]], "Print",
+ CellChangeTimes->{3.804978696547968*^9, 3.8049815468977118`*^9},
+ CellLabel->
+  "During evaluation of \
+In[6]:=",ExpressionUUID->"ddb3b9ef-3398-4ce0-855d-6299857c28ff"],
+
+Cell[BoxData[
+ InterpretationBox[
+  RowBox[{"\<\"Skipped \"\>", "\[InvisibleSpace]", "\<\"8952\"\>"}],
+  SequenceForm["Skipped ", "8952"],
+  Editable->False]], "Print",
+ CellChangeTimes->{3.804978696547968*^9, 3.804981546898724*^9},
+ CellLabel->
+  "During evaluation of \
+In[6]:=",ExpressionUUID->"c6d9b578-d1c9-4947-bd9a-cdeece1d836c"],
+
+Cell[BoxData[
+ InterpretationBox[
+  RowBox[{"\<\"Skipped \"\>", "\[InvisibleSpace]", "\<\"8953\"\>"}],
+  SequenceForm["Skipped ", "8953"],
+  Editable->False]], "Print",
+ CellChangeTimes->{3.804978696547968*^9, 3.804981546899744*^9},
+ CellLabel->
+  "During evaluation of \
+In[6]:=",ExpressionUUID->"3568055e-849f-4e40-a612-e4b24a052398"],
+
+Cell[BoxData[
+ InterpretationBox[
+  RowBox[{"\<\"Skipped \"\>", "\[InvisibleSpace]", "\<\"8954\"\>"}],
+  SequenceForm["Skipped ", "8954"],
+  Editable->False]], "Print",
+ CellChangeTimes->{3.804978696547968*^9, 3.804981546900758*^9},
+ CellLabel->
+  "During evaluation of \
+In[6]:=",ExpressionUUID->"019934e3-e8c0-48b4-a6cc-148bb25d77e7"],
+
+Cell[BoxData[
+ InterpretationBox[
+  RowBox[{"\<\"Skipped \"\>", "\[InvisibleSpace]", "\<\"8955\"\>"}],
+  SequenceForm["Skipped ", "8955"],
+  Editable->False]], "Print",
+ CellChangeTimes->{3.804978696547968*^9, 3.804981546901784*^9},
+ CellLabel->
+  "During evaluation of \
+In[6]:=",ExpressionUUID->"4ae9b958-23a2-477a-b149-a34dc2f9180e"],
+
+Cell[BoxData[
+ InterpretationBox[
+  RowBox[{"\<\"Skipped \"\>", "\[InvisibleSpace]", "\<\"8956\"\>"}],
+  SequenceForm["Skipped ", "8956"],
+  Editable->False]], "Print",
+ CellChangeTimes->{3.804978696547968*^9, 3.804981546902811*^9},
+ CellLabel->
+  "During evaluation of \
+In[6]:=",ExpressionUUID->"8e8f17ad-75dc-4d3d-87de-ccbdd1eb970e"],
+
+Cell[BoxData[
+ InterpretationBox[
+  RowBox[{"\<\"Skipped \"\>", "\[InvisibleSpace]", "\<\"8957\"\>"}],
+  SequenceForm["Skipped ", "8957"],
+  Editable->False]], "Print",
+ CellChangeTimes->{3.804978696547968*^9, 3.804981546903833*^9},
+ CellLabel->
+  "During evaluation of \
+In[6]:=",ExpressionUUID->"ccf1f9bd-52d0-4adf-a323-5eef96c003e8"],
+
+Cell[BoxData[
+ InterpretationBox[
+  RowBox[{"\<\"Skipped \"\>", "\[InvisibleSpace]", "\<\"8958\"\>"}],
+  SequenceForm["Skipped ", "8958"],
+  Editable->False]], "Print",
+ CellChangeTimes->{3.804978696547968*^9, 3.804981546904858*^9},
+ CellLabel->
+  "During evaluation of \
+In[6]:=",ExpressionUUID->"efd19e2c-d901-4011-9822-457c6990545f"],
+
+Cell[BoxData[
+ InterpretationBox[
+  RowBox[{"\<\"Skipped \"\>", "\[InvisibleSpace]", "\<\"8959\"\>"}],
+  SequenceForm["Skipped ", "8959"],
+  Editable->False]], "Print",
+ CellChangeTimes->{3.804978696547968*^9, 3.8049815469058733`*^9},
+ CellLabel->
+  "During evaluation of \
+In[6]:=",ExpressionUUID->"cd11649f-5d43-45fb-8cc7-57d378843b74"],
+
+Cell[BoxData[
+ InterpretationBox[
+  RowBox[{"\<\"Skipped \"\>", "\[InvisibleSpace]", "\<\"8960\"\>"}],
+  SequenceForm["Skipped ", "8960"],
+  Editable->False]], "Print",
+ CellChangeTimes->{3.804978696547968*^9, 3.804981546906901*^9},
+ CellLabel->
+  "During evaluation of \
+In[6]:=",ExpressionUUID->"656ce7e5-784c-4e21-9486-271140d6dd41"],
+
+Cell[BoxData[
+ InterpretationBox[
+  RowBox[{"\<\"Skipped \"\>", "\[InvisibleSpace]", "\<\"8961\"\>"}],
+  SequenceForm["Skipped ", "8961"],
+  Editable->False]], "Print",
+ CellChangeTimes->{3.804978696547968*^9, 3.804981546907919*^9},
+ CellLabel->
+  "During evaluation of \
+In[6]:=",ExpressionUUID->"8a069317-f2f2-40f1-8f94-d45d9a426ead"],
+
+Cell[BoxData[
+ InterpretationBox[
+  RowBox[{"\<\"Skipped \"\>", "\[InvisibleSpace]", "\<\"8962\"\>"}],
+  SequenceForm["Skipped ", "8962"],
+  Editable->False]], "Print",
+ CellChangeTimes->{3.804978696547968*^9, 3.804981546908956*^9},
+ CellLabel->
+  "During evaluation of \
+In[6]:=",ExpressionUUID->"15f02a02-2082-41cf-a9f4-02f4013871df"],
+
+Cell[BoxData[
+ InterpretationBox[
+  RowBox[{"\<\"Skipped \"\>", "\[InvisibleSpace]", "\<\"8963\"\>"}],
+  SequenceForm["Skipped ", "8963"],
+  Editable->False]], "Print",
+ CellChangeTimes->{3.804978696547968*^9, 3.804981546909978*^9},
+ CellLabel->
+  "During evaluation of \
+In[6]:=",ExpressionUUID->"7996006a-6b33-4e0c-b14b-0f2c443b72c1"],
+
+Cell[BoxData[
+ InterpretationBox[
+  RowBox[{"\<\"Skipped \"\>", "\[InvisibleSpace]", "\<\"8964\"\>"}],
+  SequenceForm["Skipped ", "8964"],
+  Editable->False]], "Print",
+ CellChangeTimes->{3.804978696547968*^9, 3.804981546911005*^9},
+ CellLabel->
+  "During evaluation of \
+In[6]:=",ExpressionUUID->"4dd02c4a-4605-4174-b2b3-e5000b9e051d"],
+
+Cell[BoxData[
+ InterpretationBox[
+  RowBox[{"\<\"Skipped \"\>", "\[InvisibleSpace]", "\<\"8965\"\>"}],
+  SequenceForm["Skipped ", "8965"],
+  Editable->False]], "Print",
+ CellChangeTimes->{3.804978696547968*^9, 3.804981546912026*^9},
+ CellLabel->
+  "During evaluation of \
+In[6]:=",ExpressionUUID->"479576c9-5db4-4cea-99d4-efd5ca0cb028"],
+
+Cell[BoxData[
+ InterpretationBox[
+  RowBox[{"\<\"Skipped \"\>", "\[InvisibleSpace]", "\<\"8966\"\>"}],
+  SequenceForm["Skipped ", "8966"],
+  Editable->False]], "Print",
+ CellChangeTimes->{3.804978696547968*^9, 3.804981546913055*^9},
+ CellLabel->
+  "During evaluation of \
+In[6]:=",ExpressionUUID->"40bd1fe1-b72f-42d4-95aa-eadc93fb29b6"],
+
+Cell[BoxData[
+ InterpretationBox[
+  RowBox[{"\<\"Skipped \"\>", "\[InvisibleSpace]", "\<\"8967\"\>"}],
+  SequenceForm["Skipped ", "8967"],
+  Editable->False]], "Print",
+ CellChangeTimes->{3.804978696547968*^9, 3.804981546914077*^9},
+ CellLabel->
+  "During evaluation of \
+In[6]:=",ExpressionUUID->"41fd5b85-4424-4a64-8499-60b0091c9996"],
+
+Cell[BoxData[
+ InterpretationBox[
+  RowBox[{"\<\"Skipped \"\>", "\[InvisibleSpace]", "\<\"8968\"\>"}],
+  SequenceForm["Skipped ", "8968"],
+  Editable->False]], "Print",
+ CellChangeTimes->{3.804978696547968*^9, 3.804981546915098*^9},
+ CellLabel->
+  "During evaluation of \
+In[6]:=",ExpressionUUID->"6282bc27-070c-4df1-a98a-9ed656247ca0"],
+
+Cell[BoxData[
+ InterpretationBox[
+  RowBox[{"\<\"Skipped \"\>", "\[InvisibleSpace]", "\<\"8969\"\>"}],
+  SequenceForm["Skipped ", "8969"],
+  Editable->False]], "Print",
+ CellChangeTimes->{3.804978696547968*^9, 3.804981546916128*^9},
+ CellLabel->
+  "During evaluation of \
+In[6]:=",ExpressionUUID->"f407a07a-f33e-4fd4-9265-f191aea92b77"],
+
+Cell[BoxData[
+ InterpretationBox[
+  RowBox[{"\<\"Skipped \"\>", "\[InvisibleSpace]", "\<\"8970\"\>"}],
+  SequenceForm["Skipped ", "8970"],
+  Editable->False]], "Print",
+ CellChangeTimes->{3.804978696547968*^9, 3.8049815469171543`*^9},
+ CellLabel->
+  "During evaluation of \
+In[6]:=",ExpressionUUID->"bd6f49dc-1d3e-43e7-a5a6-23be6e4e8dda"],
+
+Cell[BoxData[
+ InterpretationBox[
+  RowBox[{"\<\"Skipped \"\>", "\[InvisibleSpace]", "\<\"8971\"\>"}],
+  SequenceForm["Skipped ", "8971"],
+  Editable->False]], "Print",
+ CellChangeTimes->{3.804978696547968*^9, 3.804981546918193*^9},
+ CellLabel->
+  "During evaluation of \
+In[6]:=",ExpressionUUID->"b8b4db39-c5a4-492c-a474-b5733812b2f9"],
+
+Cell[BoxData[
+ InterpretationBox[
+  RowBox[{"\<\"Skipped \"\>", "\[InvisibleSpace]", "\<\"8972\"\>"}],
+  SequenceForm["Skipped ", "8972"],
+  Editable->False]], "Print",
+ CellChangeTimes->{3.804978696547968*^9, 3.804981546919232*^9},
+ CellLabel->
+  "During evaluation of \
+In[6]:=",ExpressionUUID->"4e49f2cb-49c7-4e11-b149-024fedda5e00"],
+
+Cell[BoxData[
+ InterpretationBox[
+  RowBox[{"\<\"Skipped \"\>", "\[InvisibleSpace]", "\<\"8973\"\>"}],
+  SequenceForm["Skipped ", "8973"],
+  Editable->False]], "Print",
+ CellChangeTimes->{3.804978696547968*^9, 3.80498154692027*^9},
+ CellLabel->
+  "During evaluation of \
+In[6]:=",ExpressionUUID->"7008edc0-2f8a-46c3-894a-4f00b72a4ee8"],
+
+Cell[BoxData[
+ InterpretationBox[
+  RowBox[{"\<\"Skipped \"\>", "\[InvisibleSpace]", "\<\"8974\"\>"}],
+  SequenceForm["Skipped ", "8974"],
+  Editable->False]], "Print",
+ CellChangeTimes->{3.804978696547968*^9, 3.804981546921315*^9},
+ CellLabel->
+  "During evaluation of \
+In[6]:=",ExpressionUUID->"e039a1c8-5841-4607-b6fa-7fbf41957939"],
+
+Cell[BoxData[
+ InterpretationBox[
+  RowBox[{"\<\"Skipped \"\>", "\[InvisibleSpace]", "\<\"8975\"\>"}],
+  SequenceForm["Skipped ", "8975"],
+  Editable->False]], "Print",
+ CellChangeTimes->{3.804978696547968*^9, 3.804981546922358*^9},
+ CellLabel->
+  "During evaluation of \
+In[6]:=",ExpressionUUID->"0b2e40c5-cd40-4e96-82ca-44dfa22903e9"],
+
+Cell[BoxData[
+ InterpretationBox[
+  RowBox[{"\<\"Skipped \"\>", "\[InvisibleSpace]", "\<\"8976\"\>"}],
+  SequenceForm["Skipped ", "8976"],
+  Editable->False]], "Print",
+ CellChangeTimes->{3.804978696547968*^9, 3.80498154692339*^9},
+ CellLabel->
+  "During evaluation of \
+In[6]:=",ExpressionUUID->"a9720582-41d7-4cc1-8f1a-545657a1c6bb"],
+
+Cell[BoxData[
+ InterpretationBox[
+  RowBox[{"\<\"Skipped \"\>", "\[InvisibleSpace]", "\<\"8977\"\>"}],
+  SequenceForm["Skipped ", "8977"],
+  Editable->False]], "Print",
+ CellChangeTimes->{3.804978696547968*^9, 3.804981546924428*^9},
+ CellLabel->
+  "During evaluation of \
+In[6]:=",ExpressionUUID->"ee209ec4-a80b-4ad7-b286-76f0e5f15b99"],
+
+Cell[BoxData[
+ InterpretationBox[
+  RowBox[{"\<\"Skipped \"\>", "\[InvisibleSpace]", "\<\"8978\"\>"}],
+  SequenceForm["Skipped ", "8978"],
+  Editable->False]], "Print",
+ CellChangeTimes->{3.804978696547968*^9, 3.8049815469254827`*^9},
+ CellLabel->
+  "During evaluation of \
+In[6]:=",ExpressionUUID->"ec41b43d-149e-4538-b702-23f2010ffdfe"],
+
+Cell[BoxData[
+ InterpretationBox[
+  RowBox[{"\<\"Skipped \"\>", "\[InvisibleSpace]", "\<\"8979\"\>"}],
+  SequenceForm["Skipped ", "8979"],
+  Editable->False]], "Print",
+ CellChangeTimes->{3.804978696547968*^9, 3.804981546926537*^9},
+ CellLabel->
+  "During evaluation of \
+In[6]:=",ExpressionUUID->"0a2a9360-2d08-475b-b2eb-2fae3ee44aab"],
+
+Cell[BoxData[
+ InterpretationBox[
+  RowBox[{"\<\"Skipped \"\>", "\[InvisibleSpace]", "\<\"8980\"\>"}],
+  SequenceForm["Skipped ", "8980"],
+  Editable->False]], "Print",
+ CellChangeTimes->{3.804978696547968*^9, 3.804981546927579*^9},
+ CellLabel->
+  "During evaluation of \
+In[6]:=",ExpressionUUID->"afb0d51a-2093-402e-a698-76f67b18f7b9"],
+
+Cell[BoxData[
+ InterpretationBox[
+  RowBox[{"\<\"Skipped \"\>", "\[InvisibleSpace]", "\<\"8981\"\>"}],
+  SequenceForm["Skipped ", "8981"],
+  Editable->False]], "Print",
+ CellChangeTimes->{3.804978696547968*^9, 3.8049815469286346`*^9},
+ CellLabel->
+  "During evaluation of \
+In[6]:=",ExpressionUUID->"06256e8b-dedc-44a5-8163-ff8e435790e6"],
+
+Cell[BoxData[
+ InterpretationBox[
+  RowBox[{"\<\"Skipped \"\>", "\[InvisibleSpace]", "\<\"8982\"\>"}],
+  SequenceForm["Skipped ", "8982"],
+  Editable->False]], "Print",
+ CellChangeTimes->{3.804978696547968*^9, 3.804981546929701*^9},
+ CellLabel->
+  "During evaluation of \
+In[6]:=",ExpressionUUID->"0ee9f63e-1e5e-4af5-9a58-e35a75b6c1b3"],
+
+Cell[BoxData[
+ InterpretationBox[
+  RowBox[{"\<\"Skipped \"\>", "\[InvisibleSpace]", "\<\"8983\"\>"}],
+  SequenceForm["Skipped ", "8983"],
+  Editable->False]], "Print",
+ CellChangeTimes->{3.804978696547968*^9, 3.8049815469307404`*^9},
+ CellLabel->
+  "During evaluation of \
+In[6]:=",ExpressionUUID->"a69b4fa5-b039-494f-b808-a6bf9cd6fd77"],
+
+Cell[BoxData[
+ InterpretationBox[
+  RowBox[{"\<\"Skipped \"\>", "\[InvisibleSpace]", "\<\"8984\"\>"}],
+  SequenceForm["Skipped ", "8984"],
+  Editable->False]], "Print",
+ CellChangeTimes->{3.804978696547968*^9, 3.804981546931773*^9},
+ CellLabel->
+  "During evaluation of \
+In[6]:=",ExpressionUUID->"36edd1cd-012b-4f89-a2d8-90c49e94158f"]
+}, Open  ]],
+
+Cell[BoxData[
+ TemplateBox[{
+  "RenameFile","filex",
+   "\"Cannot overwrite existing file \
+\\!\\(\\*RowBox[{\\\"\\\\\\\"/Users/bswift/Downloads/departure_movie_PJ28-\
+images.zip\\\\\\\"\\\"}]\\).\"",2,6,2,19207004087014286199,"Local"},
+  "MessageTemplate"]], "Message", "MSG",
+ CellChangeTimes->{3.804979121452613*^9, 3.804981550940859*^9},
+ CellLabel->
+  "During evaluation of \
+In[6]:=",ExpressionUUID->"05450f36-8082-426f-a730-5f13d98abf50"],
+
+Cell[BoxData[
+ TemplateBox[{
+  "RenameFile","filex",
+   "\"Cannot overwrite existing file \
+\\!\\(\\*RowBox[{\\\"\\\\\\\"/Users/bswift/Downloads/departure_movie_PJ28-\
+metadata.zip\\\\\\\"\\\"}]\\).\"",2,6,3,19207004087014286199,"Local"},
+  "MessageTemplate"]], "Message", "MSG",
+ CellChangeTimes->{3.804979121452613*^9, 3.8049815520821047`*^9},
+ CellLabel->
+  "During evaluation of \
+In[6]:=",ExpressionUUID->"83f59152-23b7-4c88-8338-be0b074a2dd1"],
+
+Cell[BoxData[
+ InterpretationBox[
+  RowBox[{"\<\"Downloaded \"\>", "\[InvisibleSpace]", "\<\"8987\"\>", 
+   "\[InvisibleSpace]", "\<\" \"\>", "\[InvisibleSpace]", 
+   TemplateBox[{RowBox[{"\"Tue 28 Jul 2020 20:19:12\"", 
+       StyleBox[
+        RowBox[{"\"GMT\"", "\[InvisibleSpace]", 
+          StyleBox[
+           RowBox[{"-", "7.`"}], NumberMarks -> False, StripOnInput -> 
+           False]}], FontColor -> GrayLevel[0.5]]}],RowBox[{"DateObject", "[", 
+       RowBox[{
+         RowBox[{"{", 
+           
+           RowBox[{"2020", ",", "7", ",", "28", ",", "20", ",", "19", ",", 
+             "12.081595`7.834699259076985"}], "}"}], ",", "\"Instant\"", ",", 
+         "\"Gregorian\"", ",", 
+         RowBox[{"-", "7.`"}]}], "]"}]},
+    "DateObject",
+    Editable->False]}],
+  SequenceForm["Downloaded ", "8987", " ", 
+   DateObject[{2020, 7, 28, 20, 19, 12.081595`7.834699259076985}, "Instant", 
+    "Gregorian", -7.]],
+  Editable->False]], "Print",
+ CellChangeTimes->{3.804978696547968*^9, 3.8049815520884953`*^9},
+ CellLabel->
+  "During evaluation of \
+In[6]:=",ExpressionUUID->"088d84bd-d5db-45e7-9bee-e6e5bfb585d3"],
+
+Cell[BoxData[
+ TemplateBox[{
+  "RenameFile","filex",
+   "\"Cannot overwrite existing file \
+\\!\\(\\*RowBox[{\\\"\\\\\\\"/Users/bswift/Downloads/lightning_search_\
+departure_PJ28-images.zip\\\\\\\"\\\"}]\\).\"",2,6,4,19207004087014286199,
+   "Local"},
+  "MessageTemplate"]], "Message", "MSG",
+ CellChangeTimes->{3.804979121452613*^9, 3.804981559328981*^9},
+ CellLabel->
+  "During evaluation of \
+In[6]:=",ExpressionUUID->"ab5be523-934a-4a65-94b0-780e59607341"],
+
+Cell[BoxData[
+ TemplateBox[{
+  "General","stop",
+   "\"Further output of \\!\\(\\*StyleBox[RowBox[{\\\"RenameFile\\\", \
+\\\"::\\\", \\\"filex\\\"}], \\\"MessageName\\\"]\\) will be suppressed \
+during this calculation.\"",2,6,5,19207004087014286199,"Local"},
+  "MessageTemplate"]], "Message", "MSG",
+ CellChangeTimes->{3.804979121452613*^9, 3.804981559334976*^9},
+ CellLabel->
+  "During evaluation of \
+In[6]:=",ExpressionUUID->"a620a641-499f-41d1-87f6-ae3b9c263f1e"],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+ InterpretationBox[
+  RowBox[{"\<\"Downloaded \"\>", "\[InvisibleSpace]", "\<\"8988\"\>", 
+   "\[InvisibleSpace]", "\<\" \"\>", "\[InvisibleSpace]", 
+   TemplateBox[{RowBox[{"\"Tue 28 Jul 2020 20:19:20\"", 
+       StyleBox[
+        RowBox[{"\"GMT\"", "\[InvisibleSpace]", 
+          StyleBox[
+           RowBox[{"-", "7.`"}], NumberMarks -> False, StripOnInput -> 
+           False]}], FontColor -> GrayLevel[0.5]]}],RowBox[{"DateObject", "[", 
+       RowBox[{
+         RowBox[{"{", 
+           
+           RowBox[{"2020", ",", "7", ",", "28", ",", "20", ",", "19", ",", 
+             "20.46967`8.063685824983214"}], "}"}], ",", "\"Instant\"", ",", 
+         "\"Gregorian\"", ",", 
+         RowBox[{"-", "7.`"}]}], "]"}]},
+    "DateObject",
+    Editable->False]}],
+  SequenceForm["Downloaded ", "8988", " ", 
+   DateObject[{2020, 7, 28, 20, 19, 20.46967`8.063685824983214}, "Instant", 
+    "Gregorian", -7.]],
+  Editable->False]], "Print",
+ CellChangeTimes->{3.804978696547968*^9, 3.804981560471349*^9},
+ CellLabel->
+  "During evaluation of \
+In[6]:=",ExpressionUUID->"3d3cb655-66d1-4167-8d59-5c91c265a63f"],
+
+Cell[BoxData[
+ InterpretationBox[
+  RowBox[{"\<\"Skipped \"\>", "\[InvisibleSpace]", "\<\"8995\"\>"}],
+  SequenceForm["Skipped ", "8995"],
+  Editable->False]], "Print",
+ CellChangeTimes->{3.804978696547968*^9, 3.804981564474283*^9},
+ CellLabel->
+  "During evaluation of \
+In[6]:=",ExpressionUUID->"e8aa1dd4-8ed5-4c92-942c-4659c9f03314"]
+}, Open  ]],
+
+Cell[BoxData[
+ RowBox[{"{", 
+  RowBox[{"21.307754`", ",", 
+   RowBox[{"{", 
+    RowBox[{
+    "False", ",", "False", ",", "False", ",", "False", ",", "False", ",", 
+     "False", ",", "False", ",", "False", ",", "False", ",", "False", ",", 
+     "False", ",", "False", ",", "False", ",", "False", ",", "False", ",", 
+     "False", ",", "False", ",", "False", ",", "False", ",", "False", ",", 
+     "False", ",", "False", ",", "False", ",", "False", ",", "False", ",", 
+     "False", ",", "False", ",", "False", ",", "False", ",", "False", ",", 
+     "False", ",", "False", ",", "False", ",", "False", ",", "False", ",", 
+     "False", ",", "False", ",", "False", ",", "False", ",", "False", ",", 
+     "False", ",", "False", ",", "False", ",", "False", ",", "False", ",", 
+     "False", ",", "False", ",", "False", ",", "False", ",", "False", ",", 
+     "False", ",", "False", ",", "False", ",", "False", ",", "False", ",", 
+     "False", ",", "False", ",", "False", ",", "False", ",", "False", ",", 
+     "False", ",", "False", ",", "False", ",", "False"}], "}"}]}], 
+  "}"}]], "Output",
+ CellChangeTimes->{3.8049792057116756`*^9, 3.8049815644817944`*^9},
+ CellLabel->"Out[6]=",ExpressionUUID->"bf4a30b8-4ddc-41e7-915c-401991bc7220"]
+}, Open  ]],
+
+Cell[BoxData[
+ RowBox[{"(*", " ", 
+  RowBox[{"pass", " ", "8"}], " ", "*)"}]], "Input",
+ CellChangeTimes->{{3.80100161360847*^9, 
+  3.8010016156478357`*^9}},ExpressionUUID->"adb21df6-e749-4c62-b20d-\
+7f700ee2fb41"],
+
+Cell[BoxData[
+ RowBox[{"(*", " ", 
+  RowBox[{"pass", " ", "7"}], " ", "*)"}]], "Input",
+ CellChangeTimes->{{3.8010012122719707`*^9, 
+  3.801001214795353*^9}},ExpressionUUID->"1618cd01-0f37-45dc-97b6-\
+a4fe27a9c3ef"],
+
+Cell[BoxData[
+ RowBox[{"(*", " ", 
+  RowBox[{"pass", " ", 
+   RowBox[{"6", " ", ".", " ", "Everything"}], " ", "downloaded", " ", 
+   "because", " ", "had", " ", "cleaned", " ", "up", " ", "working", " ", 
+   "on", " ", "other", " ", "perijoves"}], " ", "*)"}]], "Input",
+ CellChangeTimes->{{3.800723388799309*^9, 3.8007233912306623`*^9}, {
+  3.8007236582458267`*^9, 3.8007236830052023`*^9}},
+ CellLabel->"In[4]:=",ExpressionUUID->"2a381dd4-ca12-4eec-8ba3-280a7e043789"],
+
+Cell[BoxData[
+ RowBox[{"(*", " ", 
+  RowBox[{"pass", " ", "5"}], " ", "*)"}]], "Input",
+ CellChangeTimes->{{3.800723331242731*^9, 3.800723335146503*^9}},
+ CellLabel->"In[5]:=",ExpressionUUID->"6409a093-462b-4e1f-9cbe-a6ac78de5ba3"],
+
+Cell[BoxData[
+ RowBox[{"(*", " ", 
+  RowBox[{"pass", " ", "4"}], "*)"}]], "Input",
+ CellChangeTimes->{{3.800722437257579*^9, 3.80072244069905*^9}},
+ CellLabel->"In[6]:=",ExpressionUUID->"c0b0507a-6ba6-44d4-8739-13404922dc27"],
+
+Cell[BoxData[
+ RowBox[{"(*", " ", 
+  RowBox[{"pass", " ", "3"}], " ", "*)"}]], "Input",
+ CellChangeTimes->{{3.800393441943777*^9, 3.80039344491569*^9}},
+ CellLabel->"In[7]:=",ExpressionUUID->"aa1bc050-56e4-45ea-abbe-93c60b83143d"],
+
+Cell[BoxData[
+ RowBox[{"(*", " ", 
+  RowBox[{"2", "nd", " ", "pass"}], " ", "*)"}]], "Input",
+ CellChangeTimes->{{3.800301269160226*^9, 3.8003012710304823`*^9}},
+ CellLabel->"In[8]:=",ExpressionUUID->"5ffad1dd-51d2-4a99-9eda-b90a6e1bbc83"],
+
+Cell[BoxData[
+ RowBox[{"(*", 
+  RowBox[{"first", " ", "pass"}], "*)"}]], "Input",
+ CellChangeTimes->{{3.800301242448653*^9, 3.800301246191136*^9}},
+ CellLabel->"In[9]:=",ExpressionUUID->"c5c43990-0c5e-4de6-b3f8-461201726a22"],
+
+Cell[BoxData[
+ RowBox[{"(*", "\[IndentingNewLine]", 
+  RowBox[{
+   RowBox[{
+    RowBox[{"rm", "*", 
+     RowBox[{"\\", " ", 
+      RowBox[{"*", 
+       RowBox[{".", "zip"}]}]}]}], " ", ";"}], ":", " ", 
+   RowBox[{
+   "clean", " ", "up", " ", "duplicates", " ", "\[IndentingNewLine]", "mkdir",
+     " ", "junozips"}]}], "\[IndentingNewLine]", "\[IndentingNewLine]", 
+  "*)"}]], "Input",
+ CellChangeTimes->{{3.759369082872056*^9, 3.75936909311348*^9}, {
+  3.759369698045245*^9, 3.75936969971312*^9}},
+ CellLabel->"In[10]:=",ExpressionUUID->"62d33d3b-7b07-4a93-8eb3-e90e4a7c22df"],
+
+Cell["\<\
+ls -l  *\\ *.zip ;: clean up duplicates
+rm *\\ *.zip ;: clean up duplicates
+mkdir junozips
+mv -i [0-9]*zip junozips
+cd junozips/
+for i in *.zip ; do unzip $i; done
+mkdir PJ{14,15,16,17,18}
+mkdir PJ{00,01,02,03,04,05,06,07,08,09,10,11,12,13}
+for i in 14 15 16 17 18; do mv -i ImageSet/JNCE*_${i}C*-raw.png PJ$i; done
+for i in 00 01 02 03 04 05 06 07 08 09 10 11 12 13 ; do mv -i \
+ImageSet/JNCE*_${i}C*-raw.png PJ$i; done
+cd DataSet
+# old ( for i in *Metadata.json; do cp -p  $i `grep \[OpenCurlyQuote]\
+\[CloseCurlyDoubleQuote]PRODUCT_ID\[CloseCurlyDoubleQuote]:\[CloseCurlyQuote] \
+$i | sed -e \[OpenCurlyQuote]s/.*JNCE/JNCE/\[CloseCurlyQuote] -e \
+\[OpenCurlyQuote]s/V01.*/V01.json/\[CloseCurlyQuote]`; done )
+( for i in *Metadata.json; do cp -p  $i `grep \[OpenCurlyQuote]\
+\[CloseCurlyDoubleQuote]PRODUCT_ID\[CloseCurlyDoubleQuote]:\[CloseCurlyQuote] \
+$i | sed -e \[OpenCurlyQuote]s/.*JNCE/JNCE/\[CloseCurlyQuote] -e \
+\[OpenCurlyQuote]s/\[CloseCurlyDoubleQuote],.*/.json/\[CloseCurlyQuote]`; \
+done )
+
+cd ..
+for i in 14 15 16 17 18; do mv -i DataSet/JNCE*_${i}C*.json PJ$i; done
+# old for i in 00 01 02 03 04 05 06 07 08 09 10 11 12 13 ; do mv -i \
+DataSet/JNCE*_${i}C*.json PJ$i; done
+for i in 00 03 04 05 06 07 08 09 10 11 12 13 ; do mv \
+DataSet/JNCE*_${i}C*.json ~/Downloads/junoDirs/PJ$i; done
+
+mkdir ~/Downloads/junoDirs
+# rm -rf ~/Downloads/junoDirs/PJ18
+mv -i PJ* ~/Downloads/junoDirs/
+cd ~/Downloads/junoDirs
+grep -l \[OpenCurlyQuote]\[CloseCurlyDoubleQuote]JNO:TDI_STAGES_COUNT\
+\[CloseCurlyDoubleQuote]: 1,\[CloseCurlyQuote] `pwd`/PJ*/*.json | sed \
+\[OpenCurlyQuote]s/.json/-raw.png/\[CloseCurlyQuote] \
+>PJ14-15-16-17-18a-tdi-1.txt
+
+grep -l \[OpenCurlyQuote]\[CloseCurlyDoubleQuote]JNO:TDI_STAGES_COUNT\
+\[CloseCurlyDoubleQuote]: 1,\[CloseCurlyQuote] `pwd`/PJ*/*.json | sed \
+\[OpenCurlyQuote]s/.json/-raw.png/\[CloseCurlyQuote] >PJ00-18-tdi-1.txt
+# look like didn\[CloseCurlyQuote]t have TDI 1 until PJ08
+
+cd /Users/bswift/Downloads/junoDirs/PJ03
+for i in *V02*; do rm  `echo $i | sed \[OpenCurlyQuote]s/V02/V01/\
+\[CloseCurlyQuote]`; done
+
+rm -rf ~/Downloads/junoDirs/PJ18
+mv PJ18 ~/Downloads/junoDirs/
+cd ~/Downloads/junoDirs
+# Get list of files ready for bias/gain generation
+grep -l \[OpenCurlyQuote]\[CloseCurlyDoubleQuote]JNO:TDI_STAGES_COUNT\
+\[CloseCurlyDoubleQuote]: 1,\[CloseCurlyQuote] `pwd`/PJ{15,16,17,18}/*.json | \
+sed \[OpenCurlyQuote]s/.json/-raw.png/\[CloseCurlyQuote] \
+>PJ15-16-17-18-tdi-1.txt
+
+PJ19
+Bulk download
+Files for processing
+ls -l  *\\ *.zip ;: clean up duplicates
+ls: * *.zip: No such file or directory
+mkdir junozips
+mv -i [0-9]*zip junozips
+cd junozips/
+for i in *.zip ; do unzip $i; done
+mkdir PJ19
+for i in 19; do mv -i ImageSet/JNCE*_${i}C*-raw.png PJ$i; done
+cd DataSet
+( for i in *Metadata.json; do cp -p  $i `grep \[OpenCurlyQuote]\
+\[CloseCurlyDoubleQuote]PRODUCT_ID\[CloseCurlyDoubleQuote]:\[CloseCurlyQuote] \
+$i | sed -e \[OpenCurlyQuote]s/.*JNCE/JNCE/\[CloseCurlyQuote] -e \
+\[OpenCurlyQuote]s/\[CloseCurlyDoubleQuote],.*/.json/\[CloseCurlyQuote]`; \
+done )
+cd ..
+for i in 19; do mv -i DataSet/JNCE*_${i}C*.json PJ$i; done
+mv -i PJ* ~/Downloads/junoDirs/
+cd ~/Downloads/junoDirs/
+ls PJ19
+
+Spice Update
+https://naif.jpl.nasa.gov/pub/naif/JUNO/kernels/?C=M;O=D
+Downloads to ~/Downloads/junospice
+spk
+juno_pred_orbit.bsp
+juno_rec_orbit.bsp
+JNO_SCLKSCET.00085.tsc
+juno_sc_rec_190405_190406_v01.bc
+
+download rest
+ls -l  *\\ *.zip ;: clean up duplicates
+rm *\\ *.zip ;: clean up duplicates
+mkdir junozipsB
+mv -i [0-9]*zip junozipsB
+cd junozipsB/
+for i in *.zip ; do unzip $i; done
+mkdir PJ19
+for i in 19; do mv -i ImageSet/JNCE*_${i}C*-raw.png PJ$i; done
+cd DataSet
+( for i in *Metadata.json; do cp -p  $i `grep \[OpenCurlyQuote]\
+\[CloseCurlyDoubleQuote]PRODUCT_ID\[CloseCurlyDoubleQuote]:\[CloseCurlyQuote] \
+$i | sed -e \[OpenCurlyQuote]s/.*JNCE/JNCE/\[CloseCurlyQuote] -e \
+\[OpenCurlyQuote]s/\[CloseCurlyDoubleQuote],.*/.json/\[CloseCurlyQuote]`; \
+done )
+cd ..
+for i in 19; do mv -i DataSet/JNCE*_${i}C*.json PJ$i; done
+mv -i PJ19/*  ~/Downloads/junoDirs/PJ19
+
+cd junozipsB/movie
+unzip ~/Downloads/departure_movie_PJ19-images.zip
+unzip ~/Downloads/departure_movie_PJ19-metadata.zip
+
+cd junozipsB/lightning
+Lightning all TDI 60 and Green
+unzip ~/Downloads/lightning_search_PJ19-images.zip
+unzip ~/Downloads/lightning_search_PJ19-metadata.zip
+
+
+-----------------
+PJ20  Failed to download under Mathematica 12, worked with Mathematica 11
+
+ls -l  *\\ *.zip ;: clean up duplicates
+rm *\\ *.zip ;: clean up duplicates
+mkdir junozips
+mv -i [0-9]*zip junozips
+cd junozips/
+for i in *.zip ; do unzip $i; done
+mkdir PJ20
+for i in 20; do mv -i ImageSet/JNCE*_${i}C*-raw.png PJ$i; done
+cd DataSet
+( for i in *Metadata.json; do cp -p  $i `grep \[OpenCurlyQuote]\
+\[CloseCurlyDoubleQuote]PRODUCT_ID\[CloseCurlyDoubleQuote]:\[CloseCurlyQuote] \
+$i | sed -e \[OpenCurlyQuote]s/.*JNCE/JNCE/\[CloseCurlyQuote] -e \
+\[OpenCurlyQuote]s/\[CloseCurlyDoubleQuote],.*/.json/\[CloseCurlyQuote]`; \
+done )
+cd ..
+for i in 20; do mv -i DataSet/JNCE*_${i}C*.json PJ$i; done
+mv -i PJ* ~/Downloads/junoDirs/
+cd ~/Downloads/junoDirs/
+ls PJ20
+
+
+download rest
+ls -l  *\\ *.zip ;: clean up duplicates
+rm *\\ *.zip ;: clean up duplicates
+mkdir junozipsB
+mv -i [0-9]*zip junozipsB
+cd junozipsB/
+for i in *.zip ; do unzip $i; done
+mkdir PJ20
+for i in 20; do mv -i ImageSet/JNCE*_${i}C*-raw.png PJ$i; done
+cd DataSet
+( for i in *Metadata.json; do cp -p  $i `grep \[OpenCurlyQuote]\
+\[CloseCurlyDoubleQuote]PRODUCT_ID\[CloseCurlyDoubleQuote]:\[CloseCurlyQuote] \
+$i | sed -e \[OpenCurlyQuote]s/.*JNCE/JNCE/\[CloseCurlyQuote] -e \
+\[OpenCurlyQuote]s/\[CloseCurlyDoubleQuote],.*/.json/\[CloseCurlyQuote]`; \
+done )
+cd ..
+for i in 20; do mv -i DataSet/JNCE*_${i}C*.json PJ$i; done
+mv -i PJ20/*  ~/Downloads/junoDirs/PJ20
+
+mkdir movie
+cd movie
+unzip ~/Downloads/departure_movie_PJ20-images.zip
+unzip ~/Downloads/departure_movie_PJ20-metadata.zip
+
+-------
+PJ21
+\tInitial data
+\tDownloaded with MM11
+\tcd ~/Downloads
+ls -l  *\\ *.zip ;: clean up duplicates
+# no duplicates
+# rm *\\ *.zip ;: clean up duplicates 
+rm -rf junozips
+mkdir junozips
+mv -i [0-9]*zip junozips
+cd junozips/
+for i in *.zip ; do unzip $i; done
+mkdir PJ21
+for i in 21; do mv -i ImageSet/JNCE*_${i}C*-raw.png PJ$i; done
+cd DataSet
+( for i in *Metadata.json; do cp -p  $i `grep \[OpenCurlyQuote]\
+\[CloseCurlyDoubleQuote]PRODUCT_ID\[CloseCurlyDoubleQuote]:\[CloseCurlyQuote] \
+$i | sed -e \[OpenCurlyQuote]s/.*JNCE/JNCE/\[CloseCurlyQuote] -e \
+\[OpenCurlyQuote]s/\[CloseCurlyDoubleQuote],.*/.json/\[CloseCurlyQuote]`; \
+done )
+cd ..
+for i in 21; do mv -i DataSet/JNCE*_${i}C*.json PJ$i; done
+mv -i PJ* ~/Downloads/junoDirs/
+cd ~/Downloads/junoDirs/
+
+download rest
+cd ~/Downloads
+ls -l  *\\ *.zip ;: clean up duplicates
+# no duplicates
+# rm *\\ *.zip ;: clean up duplicates
+rm -rf junozipsB
+mkdir junozipsB
+mv -i [0-9]*zip junozipsB
+cd junozipsB/
+for i in *.zip ; do unzip $i; done
+mkdir PJ21
+for i in 21; do mv -i ImageSet/JNCE*_${i}C*-raw.png PJ$i; done
+cd DataSet
+( for i in *Metadata.json; do cp -p  $i `grep \[OpenCurlyQuote]\
+\[CloseCurlyDoubleQuote]PRODUCT_ID\[CloseCurlyDoubleQuote]:\[CloseCurlyQuote] \
+$i | sed -e \[OpenCurlyQuote]s/.*JNCE/JNCE/\[CloseCurlyQuote] -e \
+\[OpenCurlyQuote]s/\[CloseCurlyDoubleQuote],.*/.json/\[CloseCurlyQuote]`; \
+done )
+cd ..
+for i in 21; do mv -i DataSet/JNCE*_${i}C*.json PJ$i; done
+mv -i PJ21/*  ~/Downloads/junoDirs/PJ21
+
+mkdir movie
+cd movie
+unzip ~/Downloads/lightning_search_departure_PJ21-images.zip
+unzip ~/Downloads/lightning_search_departure_PJ21-metadata.zip
+unzip ~/Downloads/lightning_search_approach_PJ21-images.zip
+unzip ~/Downloads/lightning_search_approach_PJ21-metadata.zip
+\
+\>", "CodeText",
+ CellChangeTimes->{{3.759369716920703*^9, 3.7593697876928673`*^9}, {
+   3.759371414197455*^9, 3.7593714315452633`*^9}, {3.75937150421212*^9, 
+   3.7593715106417103`*^9}, {3.759373264041512*^9, 3.7593732642545147`*^9}, {
+   3.759373295457477*^9, 3.7593732978705683`*^9}, {3.759373376215014*^9, 
+   3.759373408140188*^9}, {3.759373676745406*^9, 3.759373677311936*^9}, {
+   3.75937407819734*^9, 3.759374092620716*^9}, {3.7593750007946453`*^9, 
+   3.759375016709557*^9}, {3.759801355124946*^9, 3.759801366074815*^9}, {
+   3.759801918314135*^9, 3.7598019413283052`*^9}, {3.7598019821944313`*^9, 
+   3.759802021033598*^9}, {3.759802120026965*^9, 3.759802130720395*^9}, {
+   3.7598021700380697`*^9, 3.759802262456779*^9}, {3.761267970357637*^9, 
+   3.761267971282394*^9}, {3.761268190962244*^9, 3.761268191408638*^9}, {
+   3.761268384179241*^9, 3.7612683843768997`*^9}, {3.761268507145502*^9, 
+   3.761268507624545*^9}, {3.7612690124588623`*^9, 3.7612690142104673`*^9}, {
+   3.761269606325932*^9, 3.761269619841202*^9}, {3.761269674680501*^9, 
+   3.761269675144087*^9}, {3.76127117031057*^9, 3.761271177405545*^9}, {
+   3.761273396490247*^9, 3.761273402218947*^9}, {3.7612735534924088`*^9, 
+   3.7612735952046537`*^9}, {3.7612738883447027`*^9, 3.761273914143923*^9}, {
+   3.763764787392612*^9, 3.763764828669199*^9}, {3.7637648634865303`*^9, 
+   3.7637649170355663`*^9}, {3.763764953035777*^9, 3.763764968930072*^9}, {
+   3.763765019634343*^9, 3.7637650297691517`*^9}, 3.7637651350860443`*^9, {
+   3.763765954701275*^9, 3.7637660191803417`*^9}, {3.763766256500696*^9, 
+   3.763766262084552*^9}, {3.76376646861615*^9, 3.7637665096771307`*^9}, {
+   3.763766580675767*^9, 3.7637665861303062`*^9}, {3.763766640226494*^9, 
+   3.763766641609502*^9}, {3.763766740446662*^9, 3.7637667415738783`*^9}, {
+   3.76382536856325*^9, 3.763825369525064*^9}, {3.763860233404594*^9, 
+   3.763860314470837*^9}, 3.7638604290244207`*^9, {3.763860966489944*^9, 
+   3.763860994079487*^9}, {3.763861060406056*^9, 3.763861082992688*^9}, {
+   3.763861117332345*^9, 3.763861155705912*^9}, {3.763862368275189*^9, 
+   3.76386236848809*^9}, {3.763862403836478*^9, 3.763862464447838*^9}, 
+   3.763862516926825*^9, {3.768233362180911*^9, 3.768233391007502*^9}, {
+   3.7682334615101624`*^9, 3.768233465868924*^9}, {3.768233543439273*^9, 
+   3.768233563974813*^9}, {3.768233599887198*^9, 3.768233599933654*^9}, {
+   3.768233634482813*^9, 3.7682336349322023`*^9}, {3.768233668754593*^9, 
+   3.768233683108795*^9}, 3.76861125506341*^9, {3.76861132625287*^9, 
+   3.768611389424204*^9}, {3.7686115662151127`*^9, 3.768611609415827*^9}, {
+   3.772899333668963*^9, 3.772899343691012*^9}, {3.7728994828122*^9, 
+   3.77289952413791*^9}, {3.772899561693287*^9, 3.772899575328162*^9}, {
+   3.7728997687732267`*^9, 3.772899937446097*^9}, {3.773085612816663*^9, 
+   3.773085616311079*^9}, {3.7776788264580307`*^9, 
+   3.7776788333422537`*^9}},ExpressionUUID->"e65f1aa1-caad-4ab3-a4f5-\
+87cbaf63595b"],
+
+Cell["\<\
+PJ22
+\tUse Mathematica 11
+\tWait and download all data after departure movies showed up
+cd ~/Downloads
+rm *\\ *.zip ;: clean up duplicates 
+mkdir junozips
+mv -i [0-9]*zip junozips
+cd junozips/
+for i in *.zip ; do unzip $i; done
+mkdir PJ22
+for i in 22; do mv -i ImageSet/JNCE*_${i}C*-raw.png PJ$i; done
+cd DataSet
+( for i in *Metadata.json; do cp -p  $i `grep \[OpenCurlyQuote]\
+\[CloseCurlyDoubleQuote]PRODUCT_ID\[CloseCurlyDoubleQuote]:\[CloseCurlyQuote] \
+$i | sed -e \[OpenCurlyQuote]s/.*JNCE/JNCE/\[CloseCurlyQuote] -e \
+\[OpenCurlyQuote]s/\[CloseCurlyDoubleQuote],.*/.json/\[CloseCurlyQuote]`; \
+done )
+cd ..
+for i in 22; do mv -i DataSet/JNCE*_${i}C*.json PJ$i; done
+mv -i PJ* ~/Downloads/junoDirs/
+cd ~/Downloads/junoDirs/
+\
+\>", "CodeText",
+ CellChangeTimes->{{3.777678870882394*^9, 3.777678901831719*^9}, {
+  3.777678946359708*^9, 3.777678951214487*^9}, {3.777679003327456*^9, 
+  3.777679004847134*^9}, {3.777679057512918*^9, 3.777679059535009*^9}, {
+  3.777679122741838*^9, 
+  3.777679229982788*^9}},ExpressionUUID->"dc4caa38-4091-4557-95e1-\
+39540929a2d3"],
+
+Cell["\<\
+PJ23
+\tUse Mathematica 11
+\tDon\[CloseCurlyQuote]t need Juno3D library
+\tRun a 2nd time to get everything 
+cd ~/Downloads
+rm *\\ *.zip ;: clean up duplicates 
+rm -rf junozips ;: clean up old
+mkdir junozips
+mv -i [0-9]*zip junozips
+cd junozips/
+for i in *.zip ; do unzip $i; done
+mkdir PJ23
+for i in 23; do mv -i ImageSet/JNCE*_${i}C*-raw.png PJ$i; done
+cd DataSet
+( for i in *Metadata.json; do cp -p  $i `grep \[OpenCurlyQuote]\
+\[CloseCurlyDoubleQuote]PRODUCT_ID\[CloseCurlyDoubleQuote]:\[CloseCurlyQuote] \
+$i | sed -e \[OpenCurlyQuote]s/.*JNCE/JNCE/\[CloseCurlyQuote] -e \
+\[OpenCurlyQuote]s/\[CloseCurlyDoubleQuote],.*/.json/\[CloseCurlyQuote]`; \
+done )
+cd ..
+for i in 23; do mv -i DataSet/JNCE*_${i}C*.json PJ$i; done
+mv -i PJ* ~/Downloads/junoDirs/
+cd ~/Downloads/junoDirs/
+
+https://naif.jpl.nasa.gov/pub/naif/JUNO/kernels/?C=M;O=D
+Downloads to ~/Downloads/junospice
+spk
+juno_pred_orbit.bsp
+juno_rec_orbit.bsp
+sclk
+JNO_SCLKSCET.00093.tsc
+\tremember to remove .txt from end of .tsc in terminal, doesn\
+\[CloseCurlyQuote]t work if just removed in Finder
+ck
+juno_sc_rec_191102_191104_v01.bc
+
+update meta kernel
+cd /Users/bswift/Development/spicedev/j6
+emacs juno_kernels.tm
+
+next downloads
+
+cd ~/Downloads
+rm *\\ *.zip ;: clean up duplicates 
+rm -rf junozips ;: clean up old
+mkdir junozips
+mv -i [0-9]*zip junozips
+cd junozips/
+for i in *.zip ; do unzip $i; done
+mkdir PJ23
+for i in 23; do mv -i ImageSet/JNCE*_${i}C*-raw.png PJ$i; done
+cd DataSet
+( for i in *Metadata.json; do cp -p  $i `grep \[OpenCurlyQuote]\
+\[CloseCurlyDoubleQuote]PRODUCT_ID\[CloseCurlyDoubleQuote]:\[CloseCurlyQuote] \
+$i | sed -e \[OpenCurlyQuote]s/.*JNCE/JNCE/\[CloseCurlyQuote] -e \
+\[OpenCurlyQuote]s/\[CloseCurlyDoubleQuote],.*/.json/\[CloseCurlyQuote]`; \
+done )
+cd ..
+for i in 23; do mv -i DataSet/JNCE*_${i}C*.json PJ$i; done
+mv -i PJ23/* ~/Downloads/junoDirs/PJ23
+
+\
+\>", "CodeText",
+ CellChangeTimes->{{3.777678870882394*^9, 3.777678901831719*^9}, {
+  3.777678946359708*^9, 3.777678951214487*^9}, {3.777679003327456*^9, 
+  3.777679004847134*^9}, {3.777679057512918*^9, 3.777679059535009*^9}, {
+  3.777679122741838*^9, 3.777679229982788*^9}, {3.781982130179225*^9, 
+  3.7819821302155333`*^9}, {3.7819823984792747`*^9, 3.781982440452416*^9}, {
+  3.781982777795136*^9, 3.781982779969036*^9}, {3.7819830670937757`*^9, 
+  3.7819830766600847`*^9}, {3.781983186677844*^9, 3.7819831946996307`*^9}, {
+  3.781983236010098*^9, 3.7819832360515947`*^9}, {3.78198336314019*^9, 
+  3.781983364049185*^9}, {3.7819835572861843`*^9, 3.781983582345607*^9}, {
+  3.7819836759922533`*^9, 3.7819837596078043`*^9}, {3.781988469454379*^9, 
+  3.781988479652361*^9}, {3.782093897745569*^9, 3.782093906296427*^9}, {
+  3.782093984246387*^9, 3.782093988469892*^9}, {3.7826869935463467`*^9, 
+  3.7826869945902367`*^9}},ExpressionUUID->"5c1b124c-b31f-4503-bc17-\
+d274779a8966"],
+
+Cell["\<\
+PJ24
+\tUse Mathematica 11
+\tDon\[CloseCurlyQuote]t need Juno3D library
+\tRun a 2nd time to get everything 
+cd ~/Downloads
+rm *\\ *.zip ;: clean up duplicates 
+rm -rf junozips ;: clean up old
+mkdir junozips
+mv -i [0-9]*-{Data,ImageSet}.zip junozips
+cd junozips/
+for i in *.zip ; do unzip $i; done
+mkdir PJ24
+for i in 24; do mv -i ImageSet/JNCE*_${i}C*-raw.png PJ$i; done
+cd DataSet
+( for i in *Metadata.json; do cp -p  $i `grep \[OpenCurlyQuote]\
+\[CloseCurlyDoubleQuote]PRODUCT_ID\[CloseCurlyDoubleQuote]:\[CloseCurlyQuote] \
+$i | sed -e \[OpenCurlyQuote]s/.*JNCE/JNCE/\[CloseCurlyQuote] -e \
+\[OpenCurlyQuote]s/\[CloseCurlyDoubleQuote],.*/.json/\[CloseCurlyQuote]`; \
+done )
+cd ..
+for i in 24; do mv -i DataSet/JNCE*_${i}C*.json PJ$i; done
+mv -i PJ* ~/Downloads/junoDirs/
+cd ~/Downloads/junoDirs/
+
+https://naif.jpl.nasa.gov/pub/naif/JUNO/kernels/?C=M;O=D
+Downloads to ~/Downloads/junospice
+spk
+juno_pred_orbit.bsp
+juno_rec_orbit.bsp
+sclk
+JNO_SCLKSCET.00093.tsc
+JNO_SCLKSCET.00095.tsc
+\tremember to remove .txt from end of .tsc in terminal, doesn\
+\[CloseCurlyQuote]t work if just removed in Finder
+cd /Users/bswift/Downloads/junospice/kernels/sclk
+mv JNO_SCLKSCET.00095.tsc{.txt,}
+
+ck
+juno_sc_rec_191225_191227_v01.bc
+
+update meta kernel
+cd /Users/bswift/Development/spicedev/j6
+emacs juno_kernels.tm
+
+
+Additional downloads
+
+   cd ~/Downloads/
+   rm *\\ *.zip ;: clean up duplicates 
+   rm -rf junozips ;: clean up old
+   mkdir junozips
+   mv -i [0-9]*-{Data,ImageSet}.zip junozips
+   cd junozips/
+   for i in *.zip ; do unzip $i; done
+   mkdir PJ24
+   for i in 24; do mv -i ImageSet/JNCE*_${i}C*-raw.png PJ$i; done
+   cd DataSet
+   ( for i in *Metadata.json; do cp -p  $i `grep \[OpenCurlyQuote]\
+\[CloseCurlyDoubleQuote]PRODUCT_ID\[CloseCurlyDoubleQuote]:\[CloseCurlyQuote] \
+$i | sed -e \[OpenCurlyQuote]s/.*JNCE/JNCE/\[CloseCurlyQuote] -e \
+\[OpenCurlyQuote]s/\[CloseCurlyDoubleQuote],.*/.json/\[CloseCurlyQuote]`; \
+done )
+   cd ..
+   for i in 24; do mv -i DataSet/JNCE*_${i}C*.json PJ$i; done
+   mv -i PJ24/* ~/Downloads/junoDirs/PJ24
+   
+   Note: 7952 is a lightning search sequence
+
+Additional downloads
+ same as above
+ 
+ cd ~/Downloads
+ mkdir movie
+ mv -i *movie_PJ24* movie
+ cd movie
+    for i in *.zip ; do unzip $i; done
+mv -i  *_[0-9][0-9]C* ~/Downloads/junoDirs/PJ24
+
+cd ~/Downloads/junoDirs/PJ24
+mkdir ../PJ24b
+mv -i JNCE* ganymede solTest JunocamLibraryX3.blend ../PJ24b
+
+
+
+\
+\>", "CodeText",
+ CellChangeTimes->{
+  3.787103716576336*^9, {3.78710616675758*^9, 3.787106173737976*^9}, {
+   3.787416921667694*^9, 3.787416926979191*^9}, {3.787417152742167*^9, 
+   3.787417175922792*^9}, {3.787418092273213*^9, 3.787418096694984*^9}, {
+   3.7874181421276083`*^9, 3.787418146582242*^9}, {3.788140604794338*^9, 
+   3.788140605501189*^9}, {3.7881409068659353`*^9, 3.788140977802155*^9}, {
+   3.788141007968018*^9, 3.788141008151947*^9}, {3.788141172522812*^9, 
+   3.788141223695238*^9}, {3.788141319517373*^9, 3.7881413352500057`*^9}, {
+   3.7881414619847116`*^9, 3.788141462122809*^9}, 
+   3.788141631840684*^9},ExpressionUUID->"527f2d59-d00a-44d0-a162-\
+9c9a68e3e9d9"],
+
+Cell["\<\
+PJ25
+\tUse Mathematica 11
+\tDon\[CloseCurlyQuote]t need Juno3D library
+\tRun a 2nd time to get everything 
+cd ~/Downloads
+rm *\\ *.zip ;: clean up duplicates 
+rm -rf junozips ;: clean up old
+mkdir junozips
+mv -i [0-9]*-{Data,ImageSet}.zip junozips
+cd junozips/
+for i in *.zip ; do unzip $i; done
+mkdir PJ25
+for i in 25; do mv -i ImageSet/JNCE*_${i}C*-raw.png PJ$i; done
+cd DataSet
+( for i in *Metadata.json; do cp -p  $i `grep \[OpenCurlyQuote]\
+\[CloseCurlyDoubleQuote]PRODUCT_ID\[CloseCurlyDoubleQuote]:\[CloseCurlyQuote] \
+$i | sed -e \[OpenCurlyQuote]s/.*JNCE/JNCE/\[CloseCurlyQuote] -e \
+\[OpenCurlyQuote]s/\[CloseCurlyDoubleQuote],.*/.json/\[CloseCurlyQuote]`; \
+done )
+cd ..
+for i in 25; do mv -i DataSet/JNCE*_${i}C*.json PJ$i; done
+mv -i PJ* ~/Downloads/junoDirs/
+cd ~/Downloads/junoDirs/
+
+https://naif.jpl.nasa.gov/pub/naif/JUNO/kernels/?C=M;O=D
+Downloads to ~/Downloads/junospice
+spk
+juno_pred_orbit.bsp
+juno_rec_orbit.bsp
+sclk
+JNO_SCLKSCET.00093.tsc
+JNO_SCLKSCET.00095.tsc
+\tremember to remove .txt from end of .tsc in terminal, doesn\
+\[CloseCurlyQuote]t work if just removed in Finder
+cd /Users/bswift/Downloads/junospice/kernels/sclk
+mv JNO_SCLKSCET.00095.tsc{.txt,}
+
+ck
+juno_sc_rec_191225_191227_v01.bc
+
+update meta kernel
+cd /Users/bswift/Development/spicedev/j6
+emacs juno_kernels.tm
+
+
+Additional downloads
+
+   cd ~/Downloads/
+   rm *\\ *.zip ;: clean up duplicates 
+   rm -rf junozips ;: clean up old
+   mkdir junozips
+   mv -i [0-9]*-{Data,ImageSet}.zip junozips
+   cd junozips/
+   for i in *.zip ; do unzip $i; done
+   mkdir PJ24
+   for i in 24; do mv -i ImageSet/JNCE*_${i}C*-raw.png PJ$i; done
+   cd DataSet
+   ( for i in *Metadata.json; do cp -p  $i `grep \[OpenCurlyQuote]\
+\[CloseCurlyDoubleQuote]PRODUCT_ID\[CloseCurlyDoubleQuote]:\[CloseCurlyQuote] \
+$i | sed -e \[OpenCurlyQuote]s/.*JNCE/JNCE/\[CloseCurlyQuote] -e \
+\[OpenCurlyQuote]s/\[CloseCurlyDoubleQuote],.*/.json/\[CloseCurlyQuote]`; \
+done )
+   cd ..
+   for i in 24; do mv -i DataSet/JNCE*_${i}C*.json PJ$i; done
+   mv -i PJ24/* ~/Downloads/junoDirs/PJ24
+   
+   Note: 7952 is a lightning search sequence
+
+Additional downloads
+ same as above
+ 
+ cd ~/Downloads
+ rm -rf movie
+ mkdir movie
+ mv -i *movie_PJ24* movie
+ cd movie
+    for i in *.zip ; do unzip $i; done
+mv -i  *_[0-9][0-9]C* ~/Downloads/junoDirs/PJ24
+
+cd ~/Downloads/junoDirs/PJ24
+mkdir ../PJ24b
+mv -i JNCE* ganymede solTest JunocamLibraryX3.blend ../PJ24b
+
+
+
+\
+\>", "CodeText",
+ CellChangeTimes->{
+  3.787103716576336*^9, {3.78710616675758*^9, 3.787106173737976*^9}, {
+   3.787416921667694*^9, 3.787416926979191*^9}, {3.787417152742167*^9, 
+   3.787417175922792*^9}, {3.787418092273213*^9, 3.787418096694984*^9}, {
+   3.7874181421276083`*^9, 3.787418146582242*^9}, {3.788140604794338*^9, 
+   3.788140605501189*^9}, {3.7881409068659353`*^9, 3.788140977802155*^9}, {
+   3.788141007968018*^9, 3.788141008151947*^9}, {3.788141172522812*^9, 
+   3.788141223695238*^9}, {3.788141319517373*^9, 3.7881413352500057`*^9}, {
+   3.7881414619847116`*^9, 3.788141462122809*^9}, 3.788141631840684*^9, {
+   3.7910515359357862`*^9, 3.791051535999332*^9}, {3.791051643992918*^9, 
+   3.791051670050297*^9}, {3.792074707020132*^9, 
+   3.792074710321002*^9}},ExpressionUUID->"966a1f9e-8388-4b9a-ac3a-\
+3b5df249560a"],
+
+Cell["\<\
+PJ25, PJ26, PJ27
+\tUse Mathematica 11
+\tDon't need Juno3D library
+\tUpate AbsoluteTiming[downloadPJ[\"26\"]]  with desired perijove number
+\tRun a 2nd time to get everything 
+\t
+cd ~/Downloads
+rm *\\ *.zip ;: clean up duplicates 
+rm -rf junozips ;: clean up old
+mkdir junozips
+mv -i [0-9]*-{Data,ImageSet}.zip junozips
+cd junozips/
+for i in *.zip ; do unzip $i; done
+mkdir PJ27
+for i in 27; do mv -i ImageSet/JNCE*_${i}C*-raw.png PJ$i; done
+cd DataSet
+( for i in *Metadata.json; do cp -p  $i `grep '\"PRODUCT_ID\":' $i | sed -e \
+'s/.*JNCE/JNCE/' -e 's/\",.*/.json/'`; done )
+cd ..
+for i in 27; do mv -i DataSet/JNCE*_${i}C*.json PJ$i; done
+mv -i PJ* ~/Downloads/junoDirs/
+cd ~/Downloads/junoDirs/
+
+ cd ~/Downloads
+ rm -rf movie
+ mkdir movie
+ mv -i *movie_PJ27* movie
+ cd movie
+    for i in *.zip ; do unzip $i; done
+mv -i  *_[0-9][0-9]C* ~/Downloads/junoDirs/PJ26
+cd !$
+
+
+https://naif.jpl.nasa.gov/pub/naif/JUNO/kernels/?C=M;O=D
+Downloads to ~/Downloads/junospice
+spk - https://naif.jpl.nasa.gov/pub/naif/JUNO/kernels/spk/?C=M;O=D
+juno_pred_orbit.bsp
+juno_rec_orbit.bsp
+
+sclk - https://naif.jpl.nasa.gov/pub/naif/JUNO/kernels/sclk/?C=M;O=D
+JNO_SCLKSCET.00099.tsc
+
+\tremember to remove .txt from end of .tsc in terminal, doesn't work if just \
+removed in Finder
+pushd /Users/bswift/Downloads/junospice/kernels/sclk
+mv -i `ls -t JNO_SCLKSCET*.txt | head -1 | sed 's/.txt//'`{.txt,}
+
+ck - https://naif.jpl.nasa.gov/pub/naif/JUNO/kernels/ck/?C=M;O=D
+juno_sc_rec_200409_200411_v01.bc
+
+update meta kernel
+cd /Users/bswift/Development/spicedev/j6
+emacs juno_kernels.tm
+\
+\>", "Program",
+ CellChangeTimes->{
+  3.796244347199394*^9, {3.7962443948242807`*^9, 3.796244415638345*^9}, {
+   3.796244620740395*^9, 3.796244659753311*^9}, {3.796244742463751*^9, 
+   3.796244749671486*^9}, 3.796244956630857*^9, {3.796245037176817*^9, 
+   3.796245038360649*^9}, {3.796245084782933*^9, 3.796245161672577*^9}, 
+   3.7962451980345297`*^9, {3.7962452395535707`*^9, 3.796245240914885*^9}, 
+   3.796245604904552*^9, {3.796317055697452*^9, 3.796317059395393*^9}, {
+   3.796317111488008*^9, 3.796317112278638*^9}, {3.796317142693769*^9, 
+   3.796317143565507*^9}, {3.796317177775457*^9, 3.79631717937528*^9}, {
+   3.800301299512355*^9, 3.800301305164765*^9}, {3.800301361315145*^9, 
+   3.800301393641603*^9}, {3.800301427192419*^9, 3.800301427712577*^9}, {
+   3.800302059279724*^9, 
+   3.8003020701120443`*^9}},ExpressionUUID->"3eae5cce-9eda-4a32-9389-\
+e8ca9af3c70a"],
+
+Cell["\<\
+Additional downloads
+
+   cd ~/Downloads/
+   rm *\\ *.zip ;: clean up duplicates 
+   rm -rf junozips ;: clean up old
+   mkdir junozips
+   mv -i [0-9]*-{Data,ImageSet}.zip junozips
+   cd junozips/
+   for i in *.zip ; do unzip $i; done
+   mkdir PJ27
+   for i in 27; do mv -i ImageSet/JNCE*_${i}C*-raw.png PJ$i; done
+   cd DataSet
+   ( for i in *Metadata.json; do cp -p  $i `grep '\"PRODUCT_ID\":' $i | sed \
+-e 's/.*JNCE/JNCE/' -e 's/\",.*/.json/'`; done )
+   cd ..
+   for i in 27; do mv -i DataSet/JNCE*_${i}C*.json PJ$i; done
+   mv -i PJ27/* ~/Downloads/junoDirs/PJ27
+   
+ cd ~/Downloads
+ rm -rf movie
+ mkdir movie
+ mv -i *movie_PJ27* movie
+ cd movie
+    for i in *.zip ; do unzip $i; done
+mv -i  *_[0-9][0-9]C* ~/Downloads/junoDirs/PJ27
+   \
+\>", "Program",
+ CellChangeTimes->{
+  3.800393567720016*^9, {3.800393638867895*^9, 
+   3.800393781939715*^9}},ExpressionUUID->"59a87f99-23b8-4095-ad99-\
+d1de85305208"],
+
+Cell["\<\
+PJ28,
+\tUse Mathematica 12
+\tDon't need Juno3D library
+\tUpate AbsoluteTiming[downloadPJ[\"28\"]]  with desired perijove number
+\tRun a 2nd time to get everything
+\t
+cd ~/Downloads
+rm *\\ *.zip ;: clean up duplicates 
+rm -rf junozips ;: clean up old
+mkdir junozips
+mv -i [0-9]*-{Data,ImageSet}.zip junozips
+cd junozips/
+for i in *.zip ; do unzip $i; done
+mkdir PJ28
+for i in 28; do mv -i ImageSet/JNCE*_${i}C*-raw.png PJ$i; done
+cd DataSet
+( for i in *Metadata.json; do cp -p  $i `grep '\"PRODUCT_ID\":' $i | sed -e \
+'s/.*JNCE/JNCE/' -e 's/\",.*/.json/'`; done )
+cd ..
+for i in 28; do mv -i DataSet/JNCE*_${i}C*.json PJ$i; done
+mv -i PJ* ~/Downloads/junoDirs/
+cd ~/Downloads/junoDirs/
+
+ cd ~/Downloads
+ rm -rf movie
+ mkdir movie
+ mv -i *movie_PJ28* movie
+ cd movie
+    for i in *.zip ; do unzip $i; done
+mv -i  *_[0-9][0-9]C* ~/Downloads/junoDirs/PJ28
+cd !$
+
+
+https://naif.jpl.nasa.gov/pub/naif/JUNO/kernels/?C=M;O=D
+Downloads to ~/Downloads/junospice
+spk - https://naif.jpl.nasa.gov/pub/naif/JUNO/kernels/spk/?C=M;O=D
+juno_pred_orbit.bsp
+juno_rec_orbit.bsp
+
+sclk - https://naif.jpl.nasa.gov/pub/naif/JUNO/kernels/sclk/?C=M;O=D
+JNO_SCLKSCET.00099.tsc
+
+\tremember to remove .txt from end of .tsc in terminal, doesn't work if just \
+removed in Finder
+pushd /Users/bswift/Downloads/junospice/kernels/sclk
+mv -i `ls -t JNO_SCLKSCET*.txt | head -1 | sed 's/.txt//'`{.txt,}
+
+ck - https://naif.jpl.nasa.gov/pub/naif/JUNO/kernels/ck/?C=M;O=D
+juno_sc_rec_200409_200411_v01.bc
+
+update meta kernel
+cd /Users/bswift/Development/spicedev/j6
+emacs juno_kernels.tm
+\
+\>", "Program",
+ CellChangeTimes->{
+  3.796244347199394*^9, {3.7962443948242807`*^9, 3.796244415638345*^9}, {
+   3.796244620740395*^9, 3.796244659753311*^9}, {3.796244742463751*^9, 
+   3.796244749671486*^9}, 3.796244956630857*^9, {3.796245037176817*^9, 
+   3.796245038360649*^9}, {3.796245084782933*^9, 3.796245161672577*^9}, 
+   3.7962451980345297`*^9, {3.7962452395535707`*^9, 3.796245240914885*^9}, 
+   3.796245604904552*^9, {3.796317055697452*^9, 3.796317059395393*^9}, {
+   3.796317111488008*^9, 3.796317112278638*^9}, {3.796317142693769*^9, 
+   3.796317143565507*^9}, {3.796317177775457*^9, 3.79631717937528*^9}, {
+   3.800301299512355*^9, 3.800301305164765*^9}, {3.800301361315145*^9, 
+   3.800301393641603*^9}, {3.800301427192419*^9, 3.800301427712577*^9}, {
+   3.800302059279724*^9, 3.8003020701120443`*^9}, {3.8049817165016603`*^9, 
+   3.804981748009408*^9}, {3.804981830662304*^9, 3.804981840527857*^9}, {
+   3.8049824375745277`*^9, 3.804982438108519*^9}, {3.804982495067986*^9, 
+   3.8049824954605923`*^9}, {3.804982573208857*^9, 
+   3.8049825737855873`*^9}},ExpressionUUID->"b16141fc-7b4b-4f35-b0cd-\
+7eed092ef3c6"]
+}, Open  ]]
+},
+WindowSize->{808, 755},
+WindowMargins->{{26, Automatic}, {Automatic, 2}},
+FrontEndVersion->"12.0 for Mac OS X x86 (64-bit) (April 8, 2019)",
+StyleDefinitions->"Default.nb"
+]
+(* End of Notebook Content *)
+
+(* Internal cache information *)
+(*CellTagsOutline
+CellTagsIndex->{}
+*)
+(*CellTagsIndex
+CellTagsIndex->{}
+*)
+(*NotebookFileOutline
+Notebook[{
+Cell[CellGroupData[{
+Cell[580, 22, 176, 3, 98, "Title",ExpressionUUID->"7621cb8b-61c2-402f-96a5-30881c8940c1"],
+Cell[759, 27, 447, 9, 52, "Input",ExpressionUUID->"033cb596-45df-4649-846d-4bf666621553"],
+Cell[1209, 38, 3372, 78, 451, "Input",ExpressionUUID->"1081996a-f022-45df-8ebb-adc738e62204"],
+Cell[4584, 118, 7468, 151, 934, "Input",ExpressionUUID->"69d5e7e7-331c-446f-ac4d-7f7211d746b3"],
+Cell[12055, 271, 4648, 97, 661, "Input",ExpressionUUID->"2dcb1fd1-c716-45df-a3ec-f89da367e491"],
+Cell[CellGroupData[{
+Cell[16728, 372, 1815, 28, 30, "Input",ExpressionUUID->"59801bf4-7a5d-4328-8a8d-84b091364a34"],
+Cell[CellGroupData[{
+Cell[18568, 404, 2456, 41, 101, "Print",ExpressionUUID->"d4addbf3-b46a-4972-8051-804146f461e9"],
+Cell[21027, 447, 336, 8, 24, "Print",ExpressionUUID->"eb218952-85de-4aba-99e9-f576048299b1"],
+Cell[21366, 457, 336, 8, 24, "Print",ExpressionUUID->"dab25d13-2800-4567-a65f-3877b3cde3c4"],
+Cell[21705, 467, 336, 8, 24, "Print",ExpressionUUID->"cb2d681f-58ee-45b8-bc50-027804293e82"],
+Cell[22044, 477, 338, 8, 24, "Print",ExpressionUUID->"cc3c40a5-b1ef-4487-97bb-ffbf223ce1bc"],
+Cell[22385, 487, 336, 8, 24, "Print",ExpressionUUID->"81acde6b-2368-4435-8276-2b2d68ff719a"],
+Cell[22724, 497, 335, 8, 24, "Print",ExpressionUUID->"95e0103d-e631-43d9-86a5-3b5f9bcaf925"],
+Cell[23062, 507, 336, 8, 24, "Print",ExpressionUUID->"a73afb89-93f5-41ac-8c37-00b9ec74adf4"],
+Cell[23401, 517, 336, 8, 24, "Print",ExpressionUUID->"f8c7a6a7-cab8-4690-9a37-bee303e8449b"],
+Cell[23740, 527, 336, 8, 24, "Print",ExpressionUUID->"e47b3048-b1eb-43d5-84ab-fe4e3cfbfa04"],
+Cell[24079, 537, 336, 8, 24, "Print",ExpressionUUID->"a0063b16-2f4f-4372-bfb5-08628954805a"],
+Cell[24418, 547, 336, 8, 24, "Print",ExpressionUUID->"e5cd1dee-4028-416f-b165-950526d368d0"],
+Cell[24757, 557, 336, 8, 24, "Print",ExpressionUUID->"012d672a-07c7-4ce7-bf92-50efcb85b979"],
+Cell[25096, 567, 336, 8, 24, "Print",ExpressionUUID->"fc79a586-69be-4d7c-8406-47850833a883"],
+Cell[25435, 577, 336, 8, 24, "Print",ExpressionUUID->"06160b13-27c8-4946-b7b7-d19d77084465"],
+Cell[25774, 587, 336, 8, 24, "Print",ExpressionUUID->"7bdc727d-f3a1-48ef-84cb-3c1d22b8ced2"],
+Cell[26113, 597, 336, 8, 24, "Print",ExpressionUUID->"4aa83eb6-0ce4-484b-946f-e9be9af3be1f"],
+Cell[26452, 607, 335, 8, 24, "Print",ExpressionUUID->"033cfc27-adc6-4e62-8d73-7cafc80ddc6a"],
+Cell[26790, 617, 336, 8, 24, "Print",ExpressionUUID->"939f6190-f762-46df-a5d5-8cd5a705e61b"],
+Cell[27129, 627, 336, 8, 24, "Print",ExpressionUUID->"90681a40-bb8f-4941-bc3f-f7f31efa222f"],
+Cell[27468, 637, 336, 8, 24, "Print",ExpressionUUID->"17502970-5684-4bac-a341-c16ab50a75f5"],
+Cell[27807, 647, 338, 8, 24, "Print",ExpressionUUID->"f2a5a2e9-ce5c-4f7d-b2c2-b2ee6e6541ef"],
+Cell[28148, 657, 336, 8, 24, "Print",ExpressionUUID->"4866acf6-6c73-4b17-a4fc-374f94905aac"],
+Cell[28487, 667, 336, 8, 24, "Print",ExpressionUUID->"0a401b77-2cf6-4e46-92ce-688c1316f9c4"],
+Cell[28826, 677, 338, 8, 24, "Print",ExpressionUUID->"72b384a0-eb96-49d7-9507-ae50afca90e0"],
+Cell[29167, 687, 336, 8, 24, "Print",ExpressionUUID->"6bb678a5-cabf-4f9f-b49a-3552cca0faaf"],
+Cell[29506, 697, 336, 8, 24, "Print",ExpressionUUID->"aa9f7bf7-7485-41cc-a667-f0d47515024a"],
+Cell[29845, 707, 336, 8, 24, "Print",ExpressionUUID->"7401562b-1900-43ab-882a-7d509e39d158"],
+Cell[30184, 717, 338, 8, 24, "Print",ExpressionUUID->"ddb3b9ef-3398-4ce0-855d-6299857c28ff"],
+Cell[30525, 727, 336, 8, 24, "Print",ExpressionUUID->"c6d9b578-d1c9-4947-bd9a-cdeece1d836c"],
+Cell[30864, 737, 336, 8, 24, "Print",ExpressionUUID->"3568055e-849f-4e40-a612-e4b24a052398"],
+Cell[31203, 747, 336, 8, 24, "Print",ExpressionUUID->"019934e3-e8c0-48b4-a6cc-148bb25d77e7"],
+Cell[31542, 757, 336, 8, 24, "Print",ExpressionUUID->"4ae9b958-23a2-477a-b149-a34dc2f9180e"],
+Cell[31881, 767, 336, 8, 24, "Print",ExpressionUUID->"8e8f17ad-75dc-4d3d-87de-ccbdd1eb970e"],
+Cell[32220, 777, 336, 8, 24, "Print",ExpressionUUID->"ccf1f9bd-52d0-4adf-a323-5eef96c003e8"],
+Cell[32559, 787, 336, 8, 24, "Print",ExpressionUUID->"efd19e2c-d901-4011-9822-457c6990545f"],
+Cell[32898, 797, 338, 8, 24, "Print",ExpressionUUID->"cd11649f-5d43-45fb-8cc7-57d378843b74"],
+Cell[33239, 807, 336, 8, 24, "Print",ExpressionUUID->"656ce7e5-784c-4e21-9486-271140d6dd41"],
+Cell[33578, 817, 336, 8, 24, "Print",ExpressionUUID->"8a069317-f2f2-40f1-8f94-d45d9a426ead"],
+Cell[33917, 827, 336, 8, 24, "Print",ExpressionUUID->"15f02a02-2082-41cf-a9f4-02f4013871df"],
+Cell[34256, 837, 336, 8, 24, "Print",ExpressionUUID->"7996006a-6b33-4e0c-b14b-0f2c443b72c1"],
+Cell[34595, 847, 336, 8, 24, "Print",ExpressionUUID->"4dd02c4a-4605-4174-b2b3-e5000b9e051d"],
+Cell[34934, 857, 336, 8, 24, "Print",ExpressionUUID->"479576c9-5db4-4cea-99d4-efd5ca0cb028"],
+Cell[35273, 867, 336, 8, 24, "Print",ExpressionUUID->"40bd1fe1-b72f-42d4-95aa-eadc93fb29b6"],
+Cell[35612, 877, 336, 8, 24, "Print",ExpressionUUID->"41fd5b85-4424-4a64-8499-60b0091c9996"],
+Cell[35951, 887, 336, 8, 24, "Print",ExpressionUUID->"6282bc27-070c-4df1-a98a-9ed656247ca0"],
+Cell[36290, 897, 336, 8, 24, "Print",ExpressionUUID->"f407a07a-f33e-4fd4-9265-f191aea92b77"],
+Cell[36629, 907, 338, 8, 24, "Print",ExpressionUUID->"bd6f49dc-1d3e-43e7-a5a6-23be6e4e8dda"],
+Cell[36970, 917, 336, 8, 24, "Print",ExpressionUUID->"b8b4db39-c5a4-492c-a474-b5733812b2f9"],
+Cell[37309, 927, 336, 8, 24, "Print",ExpressionUUID->"4e49f2cb-49c7-4e11-b149-024fedda5e00"],
+Cell[37648, 937, 335, 8, 24, "Print",ExpressionUUID->"7008edc0-2f8a-46c3-894a-4f00b72a4ee8"],
+Cell[37986, 947, 336, 8, 24, "Print",ExpressionUUID->"e039a1c8-5841-4607-b6fa-7fbf41957939"],
+Cell[38325, 957, 336, 8, 24, "Print",ExpressionUUID->"0b2e40c5-cd40-4e96-82ca-44dfa22903e9"],
+Cell[38664, 967, 335, 8, 24, "Print",ExpressionUUID->"a9720582-41d7-4cc1-8f1a-545657a1c6bb"],
+Cell[39002, 977, 336, 8, 24, "Print",ExpressionUUID->"ee209ec4-a80b-4ad7-b286-76f0e5f15b99"],
+Cell[39341, 987, 338, 8, 24, "Print",ExpressionUUID->"ec41b43d-149e-4538-b702-23f2010ffdfe"],
+Cell[39682, 997, 336, 8, 24, "Print",ExpressionUUID->"0a2a9360-2d08-475b-b2eb-2fae3ee44aab"],
+Cell[40021, 1007, 336, 8, 24, "Print",ExpressionUUID->"afb0d51a-2093-402e-a698-76f67b18f7b9"],
+Cell[40360, 1017, 338, 8, 24, "Print",ExpressionUUID->"06256e8b-dedc-44a5-8163-ff8e435790e6"],
+Cell[40701, 1027, 336, 8, 24, "Print",ExpressionUUID->"0ee9f63e-1e5e-4af5-9a58-e35a75b6c1b3"],
+Cell[41040, 1037, 338, 8, 24, "Print",ExpressionUUID->"a69b4fa5-b039-494f-b808-a6bf9cd6fd77"],
+Cell[41381, 1047, 336, 8, 24, "Print",ExpressionUUID->"36edd1cd-012b-4f89-a2d8-90c49e94158f"]
+}, Open  ]],
+Cell[41732, 1058, 445, 10, 24, "Message",ExpressionUUID->"05450f36-8082-426f-a730-5f13d98abf50"],
+Cell[42180, 1070, 449, 10, 24, "Message",ExpressionUUID->"83f59152-23b7-4c88-8338-be0b074a2dd1"],
+Cell[42632, 1082, 1125, 26, 33, "Print",ExpressionUUID->"088d84bd-d5db-45e7-9bee-e6e5bfb585d3"],
+Cell[43760, 1110, 460, 11, 24, "Message",ExpressionUUID->"ab5be523-934a-4a65-94b0-780e59607341"],
+Cell[44223, 1123, 468, 10, 24, "Message",ExpressionUUID->"a620a641-499f-41d1-87f6-ae3b9c263f1e"],
+Cell[CellGroupData[{
+Cell[44716, 1137, 1121, 26, 33, "Print",ExpressionUUID->"3d3cb655-66d1-4167-8d59-5c91c265a63f"],
+Cell[45840, 1165, 336, 8, 24, "Print",ExpressionUUID->"e8aa1dd4-8ed5-4c92-942c-4659c9f03314"]
+}, Open  ]],
+Cell[46191, 1176, 1233, 20, 140, "Output",ExpressionUUID->"bf4a30b8-4ddc-41e7-915c-401991bc7220"]
+}, Open  ]],
+Cell[47439, 1199, 214, 5, 30, "Input",ExpressionUUID->"adb21df6-e749-4c62-b20d-7f700ee2fb41"],
+Cell[47656, 1206, 215, 5, 30, "Input",ExpressionUUID->"1618cd01-0f37-45dc-97b6-a4fe27a9c3ef"],
+Cell[47874, 1213, 470, 8, 52, "Input",ExpressionUUID->"2a381dd4-ca12-4eec-8ba3-280a7e043789"],
+Cell[48347, 1223, 231, 4, 30, "Input",ExpressionUUID->"6409a093-462b-4e1f-9cbe-a6ac78de5ba3"],
+Cell[48581, 1229, 225, 4, 30, "Input",ExpressionUUID->"c0b0507a-6ba6-44d4-8739-13404922dc27"],
+Cell[48809, 1235, 230, 4, 30, "Input",ExpressionUUID->"aa1bc050-56e4-45ea-abbe-93c60b83143d"],
+Cell[49042, 1241, 239, 4, 30, "Input",ExpressionUUID->"5ffad1dd-51d2-4a99-9eda-b90a6e1bbc83"],
+Cell[49284, 1247, 225, 4, 30, "Input",ExpressionUUID->"c5c43990-0c5e-4de6-b3f8-461201726a22"],
+Cell[49512, 1253, 578, 14, 115, "Input",ExpressionUUID->"62d33d3b-7b07-4a93-8eb3-e90e4a7c22df"],
+Cell[50093, 1269, 10595, 262, 3776, "CodeText",ExpressionUUID->"e65f1aa1-caad-4ab3-a4f5-87cbaf63595b"],
+Cell[60691, 1533, 1077, 29, 395, "CodeText",ExpressionUUID->"dc4caa38-4091-4557-95e1-39540929a2d3"],
+Cell[61771, 1564, 2842, 77, 1130, "CodeText",ExpressionUUID->"5c1b124c-b31f-4503-bc17-d274779a8966"],
+Cell[64616, 1643, 3088, 97, 1634, "CodeText",ExpressionUUID->"527f2d59-d00a-44d0-a162-9c9a68e3e9d9"],
+Cell[67707, 1742, 3250, 100, 1655, "CodeText",ExpressionUUID->"966a1f9e-8388-4b9a-ac3a-3b5df249560a"],
+Cell[70960, 1844, 2453, 69, 934, "Program",ExpressionUUID->"3eae5cce-9eda-4a32-9389-e8ca9af3c70a"],
+Cell[73416, 1915, 919, 31, 475, "Program",ExpressionUUID->"59a87f99-23b8-4095-ad99-d1de85305208"],
+Cell[74338, 1948, 2691, 72, 934, "Program",ExpressionUUID->"b16141fc-7b4b-4f35-b0cd-7eed092ef3c6"]
+}, Open  ]]
+}
+]
+*)
+
